@@ -1,1 +1,1 @@
-# algorithm-design-book
+# algorithms
