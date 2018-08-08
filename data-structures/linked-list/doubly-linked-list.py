@@ -38,7 +38,21 @@ class List:
         while (ix != self._sentinel) and (ix.data != item):
             ix = ix.next
         if (ix.data == item):
-            ix.prev, ix.next = ix.next, ix.prev
+            ix.prev.next, ix.next.prev = ix.next, ix.prev
+
+    def insert(self, index, item):
+        ix, el = index, self._sentinel.next
+        while (ix > 0) and (el != self._sentinel):
+            el = el.next
+        node = Node(item, el, el.prev)
+        el.prev.next = node
+        el.prev = node
+
+    def search(self, predicate):
+        el = self._sentinel.next
+        while (el != self._sentinel) and (not predicate(el.data)):
+            el = el.next
+        return el.data if el != self._sentinel else None
 
 
 def intersperse(delimiter, seq):
@@ -56,3 +70,24 @@ if __name__ == '__main__':
     lst.prepend(42)
 
     print( str(lst) )
+
+    lst.delete(2)
+    lst.delete(42)
+    lst.delete(3)
+    lst.delete(120)
+
+    print( str(lst) )
+
+    lst.insert(0, 44)
+    lst.insert(3, 2)
+    lst.insert(100, 3)
+
+    print (str(lst))
+
+    r1 = lst.search(lambda x: x == 2)
+    r2 = lst.search(lambda x: x % 2 == 1)
+    r3 = lst.search(lambda x: x > 400)
+
+    print('eq 2 => {itm}'.format(itm=r1))
+    print('odd => {itm}'.format(itm=r2))
+    print('gt 400 => {itm}'.format(itm=r3))
