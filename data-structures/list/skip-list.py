@@ -1,3 +1,9 @@
+'''
+  Skip list implementation that uses recursion
+  to backtrack the visited nodes to reduce the time
+  of insertion and deletion.
+'''
+
 from random import randint
 
 class Node:
@@ -13,12 +19,14 @@ class SkipList:
 
     def insert(self, data):
         node = Node(data, [None] * self._levels)
-        self._insert(self._levels, self._sentinel, node)
+        self.__insert(self._levels - 1, self._sentinel, node)
 
-    def _insert(self, level, parent, node):
-        if (level == 1):
+    def __insert(self, level, parent, node):
+        # we are at the very bottom layer of our skip-list,
+        # now we need to find the appropriate place to insert the node
+        if (level == 0):
             el = parent
-            while (el.next[level] is not None and node.data <= el.next[level].data):
+            while (el.next[level] is not None and node.data >= el.next[level].data):
                 el = el.next[level]
 
             node.next[level] = el.next[level]
@@ -26,9 +34,10 @@ class SkipList:
 
             return randint(1, self._p) == 1
 
+        # the next node on this level has a bigger value,
+        # we need to move one level down to find the right place
         if (parent.next[level] is None or node.data <= parent.next[level].data):
-            # move one level down on the same node
-            add_link = self._insert(level - 1, parent, node)
+            add_link = self.__insert(level - 1, parent, node)
 
             if add_link:
                 node.next[level] = parent.next[level]
@@ -38,5 +47,23 @@ class SkipList:
                 return False
 
         # move to the next node on this level
-        return self._insert(level, parent.next[level], node)
+        return self.__insert(level, parent.next[level], node)
 
+    def __str__(self):
+        res = ''
+        for level in range(self._levels - 1, -1, -1):
+            el, sr = self._sentinel.next[level], []
+            while (el is not None):
+                sr.append(str(el.data))
+                el = el.next[level]
+            res += str(level) + '| ' + ' -> '.join(sr) + '\n'
+        return res
+
+
+if __name__ == '__main__':
+    ls = SkipList(4, 2)
+
+    for i in range(20):
+        ls.insert(randint(1, 40))
+
+    print(str(ls))
