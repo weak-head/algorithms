@@ -75,6 +75,32 @@ class SkipList:
         else:
             self.__delete(data, level, parent.next[level])
 
+    def find(self, data):
+        el = self._sentinel
+        for level in range(self._levels - 1, -1, -1):
+            while (el.next[level] is not None and data > el.next[level].data):
+                el = el.next[level]
+            if (el.next[level] is not None and el.next[level].data == data):
+                return data
+        return None
+
+    def rebalance(self):
+        link, el, ptrs = True, self._sentinel, [self._sentinel] * self._levels
+        while (el is not None):
+            # remove all connections on all levels for this node
+            # and possibly replace them with a new connections
+            for level in range(1, self._levels):
+                el.next[level] = None
+
+                # create a new connection
+                if (link and randint(1, self._p) == 1):
+                    ptrs[level].next[level] = el
+                    ptrs[level] = el
+                else:
+                    link = False
+
+            el, link = el.next[0], True
+
     def __str__(self):
         res = ''
         for level in range(self._levels - 1, -1, -1):
@@ -91,13 +117,26 @@ if __name__ == '__main__':
 
     for i in range(20):
         ls.insert(randint(1, 40))
+    print(ls)
 
-    print(str(ls))
+    print('rebalance #1:')
+    ls.rebalance()
+    print(ls)
 
-    di = None
-    while di != 0:
-        di = int(input('\ndel: '))
-        ls.delete(di)
-        print(str(ls))
+    print('rebalance #2:')
+    ls.rebalance()
+    print(ls)
 
+    itm = None
+    while itm != 0:
+        itm = int(input('\ndel: '))
+        ls.delete(itm)
+        print(ls)
 
+        itm = int(input('\nfind: '))
+        fi = ls.find(itm)
+        print(fi)
+
+        print('rebalance:')
+        ls.rebalance()
+        print(ls)
