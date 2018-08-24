@@ -1,5 +1,27 @@
 # algorithms
 
+## Combinatorial
+
+- permutations
+  - [fisher-yates shuffle](combinatorial/permutations/fisher-yates-shuffle.hs)
+
+## Number theory
+
+- primes
+  - [sieve eratosthenes](number-theory/primes/sieve-eratosthenes/primes-sieve-eratosthenes.hs)
+
+## Searching and sorting
+
+- sorting
+  - [bubble](searching-and-sorting/bubble-sort/bubble-sort.hs)
+  - [insertion](searching-and-sorting/insertion-sort/insertion-sort.hs)
+
+## NP hard
+
+- tsp
+  - [nearest neighbor](np-hard/tsp/nearest-neighbor.py)
+  - [closest pair](np-hard/tsp/closest-pair.py)
+
 ## Data structures
 
 - abstract data type
