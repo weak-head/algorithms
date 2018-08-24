@@ -49,6 +49,32 @@ class SkipList:
         # move to the next node on this level
         return self.__insert(level, parent.next[level], node)
 
+    def delete(self, data):
+        self.__delete(data, self._levels - 1, self._sentinel)
+
+    def __delete(self, data, level, parent):
+        # the first element in our list is sentinel,
+        # so we can safely we keep track of the next element in the chain,
+        # without any additional checks
+        if (level == 0):
+            el = parent
+            while (el.next[level] is not None and el.next[level].data != data):
+                el = el.next[level]
+
+            # delete the element from the bottom level
+            if el.next[level] is not None:
+                el.next[level] = el.next[level].next[level]
+
+        elif (parent.next[level] is None or data <= parent.next[level].data):
+            self.__delete(data, level - 1, parent)
+
+            # re-adjust pointer on this level
+            if (parent.next[level] is not None and parent.next[level].data == data):
+                parent.next[level] = parent.next[level].next[level]
+
+        else:
+            self.__delete(data, level, parent.next[level])
+
     def __str__(self):
         res = ''
         for level in range(self._levels - 1, -1, -1):
@@ -67,3 +93,11 @@ if __name__ == '__main__':
         ls.insert(randint(1, 40))
 
     print(str(ls))
+
+    di = None
+    while di != 0:
+        di = int(input('\ndel: '))
+        ls.delete(di)
+        print(str(ls))
+
+
