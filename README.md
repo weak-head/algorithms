@@ -28,6 +28,7 @@
   - [queue](data-structures/adt/queue/double-ended-queue.py)
   - [stack](data-structures/adt/stack/stack-linked-list.py)
 - array
+  - [dynamic array](data-structures/array/dynamic-array.cpp)
   - [circular buffer](data-structures/array/circular-buffer.cpp)
 - list
   - [singly linked list](data-structures/list/singly-linked-list.py)
