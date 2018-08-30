@@ -36,3 +36,4 @@
   - [self-organizing list](data-structures/list/self-organizing-list.py)
   - [skip list](data-structures/list/skip-list.py)
   - [unrolled linked list](data-structures/list/unrolled-linked-list.py)
+  - [difference list](data-structures/list/difference-list.hs)
