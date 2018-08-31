@@ -29,6 +29,7 @@
   - [stack](data-structures/adt/stack/stack-linked-list.py)
 - array
   - [dynamic array](data-structures/array/dynamic-array.cpp)
+  - [parallel array](data-structures/array/parallel-array.py)
   - [circular buffer](data-structures/array/circular-buffer.cpp)
 - list
   - [singly linked list](data-structures/list/singly-linked-list.py)
