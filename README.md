@@ -38,3 +38,5 @@
   - [skip list](data-structures/list/skip-list.py)
   - [unrolled linked list](data-structures/list/unrolled-linked-list.py)
   - [difference list](data-structures/list/difference-list.hs)
+- binary tree
+  - [binary tree](data-structures/binary-tree/binary-tree.py)
