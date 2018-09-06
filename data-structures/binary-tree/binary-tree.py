@@ -1,8 +1,8 @@
 
 '''
-The unbalanced binary tree, that is in a worst case
-could become pathological tree (each parent node has only
-one associated child node).
+Unbalanced binary tree.
+In the worst case could become pathological tree
+(each parent node has only one associated child node).
 '''
 
 class Node:
@@ -32,10 +32,20 @@ class BinaryTree:
 
     # O(h)
     def find(self, data):
-        pass
+        return BinaryTree.__find(self._root, data)
+
+    @staticmethod
+    def __find(node, data):
+        if node is None or node.data == data:
+            return node
+        elif data > node.data:
+            return BinaryTree.__find(node.right, data)
+        else:
+            return BinaryTree.__find(node.left, data)
 
     # O(h)
     def delete(self, data):
+        # node = BinaryTree.__find(self._root, data)
         pass
 
     # O(n)
@@ -59,3 +69,15 @@ if __name__ == '__main__':
     tree.insert(6)
 
     tree.traverse(print)
+    print()
+
+    tree.insert(1)
+    tree.insert(3)
+    tree.insert(7)
+    tree.insert(5)
+
+    tree.traverse(print)
+    print()
+
+    n = tree.find(6)
+    print(n.data)
