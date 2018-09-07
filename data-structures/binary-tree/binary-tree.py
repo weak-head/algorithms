@@ -54,8 +54,7 @@ class BinaryTree:
             pass
         # 2 children
         elif node.left is not None and node.right is not None:
-            new_child = node.left
-            max_child = new_child
+            max_child = new_child = node.left
             while max_child.right is not None:
                 max_child = max_child.right
             max_child.right = node.right
@@ -63,6 +62,8 @@ class BinaryTree:
         # 1 child
         else:
             new_child = node.left if node.left is not None else node.right
+
+        if new_child is not None:
             new_child.parent = node.parent
 
         # root
@@ -87,22 +88,15 @@ class BinaryTree:
         f(node.data)
         BinaryTree.__traverse(node.right, f)
 
+    @classmethod
+    def fromList(ctr, xs):
+        tree = ctr()
+        for x in xs:
+            tree.insert(x)
+        return tree
 
 if __name__ == '__main__':
-    tree = BinaryTree()
-
-    tree.insert(4)
-    tree.insert(2)
-    tree.insert(6)
-
-    tree.traverse(print)
-    print()
-
-    tree.insert(1)
-    tree.insert(3)
-    tree.insert(7)
-    tree.insert(5)
-
+    tree = BinaryTree.fromList([4, 2, 6, 1, 3, 7, 5])
     tree.traverse(print)
     print()
 
@@ -110,7 +104,11 @@ if __name__ == '__main__':
     print(n.data)
     print()
 
-    tree.delete(1)
-    tree.delete(4)
+    for x in [1, 4, 5]:
+        tree.delete(x)
+    tree.traverse(print)
+    print()
+
+    tree = BinaryTree.fromList([10, 5, 7, 6, 8])
     tree.delete(5)
     tree.traverse(print)
