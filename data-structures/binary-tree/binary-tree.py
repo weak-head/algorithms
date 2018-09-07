@@ -6,10 +6,11 @@ In the worst case could become pathological tree
 '''
 
 class Node:
-    def __init__(self, data, left=None, right=None):
+    def __init__(self, data, parent=None, left=None, right=None):
         self.data = data
         self.left = left
         self.right = right
+        self.parent = parent
 
 
 class BinaryTree:
@@ -26,9 +27,9 @@ class BinaryTree:
             p = c
             c = c.right if data > c.data else c.left
         if data > p.data:
-            p.right = Node(data)
+            p.right = Node(data, p)
         else:
-            p.left = Node(data)
+            p.left = Node(data, p)
 
     # O(h)
     def find(self, data):
@@ -45,8 +46,34 @@ class BinaryTree:
 
     # O(h)
     def delete(self, data):
-        # node = BinaryTree.__find(self._root, data)
-        pass
+        node = BinaryTree.__find(self._root, data)
+        new_child = None
+
+        # 0 children
+        if node.left is None and node.right is None:
+            pass
+        # 2 children
+        elif node.left is not None and node.right is not None:
+            new_child = node.left
+            max_child = new_child
+            while max_child.right is not None:
+                max_child = max_child.right
+            max_child.right = node.right
+            node.right.parent = max_child
+        # 1 child
+        else:
+            new_child = node.left if node.left is not None else node.right
+            new_child.parent = node.parent
+
+        # root
+        if node.parent is None:
+            self._root = new_child
+        # left child
+        elif node.parent.left == node:
+            node.parent.left = new_child
+        # right child
+        else:
+            node.parent.right = new_child
 
     # O(n)
     def traverse(self, f):
@@ -81,3 +108,9 @@ if __name__ == '__main__':
 
     n = tree.find(6)
     print(n.data)
+    print()
+
+    tree.delete(1)
+    tree.delete(4)
+    tree.delete(5)
+    tree.traverse(print)
