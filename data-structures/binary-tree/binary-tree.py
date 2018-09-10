@@ -80,6 +80,23 @@ class BinaryTree:
     def traverse(self, f):
         BinaryTree.__traverse(self._root, f)
 
+    # O(n)
+    def breadth_first_traverse(self, f):
+        BinaryTree.__breadth_first_traverse(self._root, f)
+
+    @staticmethod
+    def __breadth_first_traverse(node, f):
+        nodes = []
+        nodes.append(tree._root)
+        while len(nodes) != 0:
+            n, nodes = nodes[0], nodes[1:]
+            if n.left is not None:
+               nodes.append(n.left)
+            if n.right is not None:
+               nodes.append(n.right)
+            f(n.data)
+
+
     @staticmethod
     def __traverse(node, f):
         if node is None:
@@ -99,6 +116,8 @@ if __name__ == '__main__':
     tree = BinaryTree.fromList([4, 2, 6, 1, 3, 7, 5])
     tree.traverse(print)
     print()
+    tree.breadth_first_traverse(print)
+    print('------'); print()
 
     n = tree.find(6)
     print(n.data)
@@ -108,7 +127,12 @@ if __name__ == '__main__':
         tree.delete(x)
     tree.traverse(print)
     print()
+    tree.breadth_first_traverse(print)
+    print('------'); print()
 
     tree = BinaryTree.fromList([10, 5, 7, 6, 8])
     tree.delete(5)
     tree.traverse(print)
+    print()
+    tree.breadth_first_traverse(print)
+    print('------'); print()
