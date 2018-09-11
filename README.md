@@ -25,8 +25,9 @@
 ## Data structures
 
 - abstract data type
-  - [queue](data-structures/adt/queue/double-ended-queue.py)
-  - [stack](data-structures/adt/stack/stack-linked-list.py)
+  - [queue](data-structures/adt/queue)
+  - [stack](data-structures/adt/stack)
+  - [priority queue](data-structures/adt/priority-queue)
 - array
   - [dynamic array](data-structures/array/dynamic-array.cpp)
   - [parallel array](data-structures/array/parallel-array.py)
