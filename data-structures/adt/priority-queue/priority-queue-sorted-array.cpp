@@ -38,6 +38,18 @@ void PriorityQueue<T>::insert(T item) {
   this->queue.insert(it, item);
 }
 
+// O(1)
+template<typename T>
+T PriorityQueue<T>::peek() {
+  return this->queue.back();
+}
+
+// O(1)
+template<typename T>
+void PriorityQueue<T>::deleteMin() {
+  this->queue.pop_back();
+}
+
 // O(n)
 template<typename T>
 void PriorityQueue<T>::print() {
@@ -73,4 +85,10 @@ int main() {
   cout << "+0" << '\n';
   queue.insert(0);
   queue.print();
+
+  cout << "peek: " << queue.peek() << '\n';
+  queue.deleteMin();
+  cout << "peek: " << queue.peek() << '\n';
+  queue.deleteMin();
+  cout << "peek: " << queue.peek() << '\n';
 }
