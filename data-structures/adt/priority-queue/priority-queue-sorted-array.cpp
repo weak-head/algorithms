@@ -3,7 +3,7 @@
 
 using namespace std;
 
-// Priority queue that is based on sorted array
+// Priority queue that is based on sorted dynamic array
 //
 // Insert: O(n)
 // Peek: O(1)

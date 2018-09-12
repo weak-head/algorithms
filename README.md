@@ -26,12 +26,13 @@
 
 - abstract data type
   - [queue](data-structures/adt/queue)
-    - [double ended queue](data-structures/adt/queue/double-ended-queue.py)
-    - [linked list queue](data-structures/adt/queue/queue-linked-list.py)
+    - [double ended](data-structures/adt/queue/double-ended-queue.py)
+    - [linked list](data-structures/adt/queue/queue-linked-list.py)
   - [stack](data-structures/adt/stack)
-    - [linked list stack](data-structures/adt/stack/stack-linked-list.py)
+    - [linked list](data-structures/adt/stack/stack-linked-list.py)
   - [priority queue](data-structures/adt/priority-queue)
-    - [linked list priority queue](data-structures/adt/priority-queue/priority-queue-linked-list.hs)
+    - [linked list](data-structures/adt/priority-queue/priority-queue-linked-list.hs)
+    - [sorted dynamic array](data-structures/adt/priority-queue/priority-queue-sorted-array.cpp)
 - array
   - [dynamic array](data-structures/array/dynamic-array.cpp)
   - [parallel array](data-structures/array/parallel-array.py)
