@@ -13,6 +13,7 @@ class Hashtable:
         index = self.__get_index(key)
         self._map[index].append((key, value))
 
+    # worst case O(n)
     def remove(self, key):
         index = self.__get_index(key)
         for ix, (k, _) in enumerate(self._map[index]):
@@ -29,11 +30,12 @@ class Hashtable:
             srep += str(ix) + ' -> ' + str(bucket) + '\n'
         return srep
 
+    # O(k), where k is string length
     @staticmethod
     def get_hash(str_object):
         hash = 0
         for index, char in enumerate(str_object):
-            hash += (index * 255) * ord(char)
+            hash += (255 ^ index) * ord(char)
         return hash
 
 if __name__ == '__main__':
