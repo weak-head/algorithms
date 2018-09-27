@@ -37,7 +37,7 @@ class Hashtable:
             for item in bucket:
                 yield item
 
-    # O(n)
+    # O(m + n)
     def resize(self, new_capacity):
         items = list(self.elements())
         self._map = [[] for x in range(new_capacity)]
@@ -95,9 +95,10 @@ if __name__ == '__main__':
     h.insert('ghy', 12)
     print(h)
 
-    # resize
+    # resize (shrink)
     h.resize(3)
     print(h)
 
+    # resize (grow)
     h.resize(29)
     print(h)
