@@ -46,5 +46,6 @@
   - [difference list](data-structures/list/difference-list.hs)
 - hash table
   - [separate chaining](data-structures/hash-table/separate-chaining-hash-table.py)
+  - [open addressing](data-structures/hash-table/open-addressing-hash-table.py)
 - binary tree
   - [binary tree](data-structures/binary-tree/binary-tree.py)
