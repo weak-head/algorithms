@@ -14,6 +14,11 @@ class Hashtable:
             raise Exception('Fully loaded hash-table')
         self._map[index] = (key, value)
 
+    # O(1), hi load and really bad clustering -> O(n)
+    def contains(self, key):
+        index = self.__find_slot(key)
+        return (index is not None) and (self._map[index] is not None) and (self._map[index][0] == key)
+
     # O(n), for fully loaded table
     def __find_slot(self, key):
         index = self.__get_index(key)
@@ -44,12 +49,20 @@ class Hashtable:
 
 
 if __name__ == '__main__':
-    ht = Hashtable(3)
+    ht = Hashtable(7)
 
+    # populate
     ht.insert('abc', 1)
     ht.insert('gas', 2)
     ht.insert('zzz', 3)
     print(ht)
 
-    ht.insert('faf', 4)
-    print(ht)
+    # contains check
+    print('Contains "abc": ', ht.contains('abc'))
+    print('Contains "bbb": ', ht.contains('bbb'))
+
+    # generate table full exception
+    try:
+        ht.insert('faf', 4)
+    except Exception as ex:
+        print('Caught: ', repr(ex))
