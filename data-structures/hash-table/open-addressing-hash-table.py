@@ -1,20 +1,22 @@
 '''
-Fixed size hash table
+Dynamic hash table
 that uses open addressing (linear probing) for hash collision resolution
 and lazy elements deletion.
 '''
 
 class Hashtable:
-    def __init__(self, capacity):
-        self._map = [None] * capacity
-        self._capacity = capacity
+    def __init__(self):
+        self._capacity = 7
+        self._map = [None] * self._capacity
 
     # depends on load factor and hash distribution quality. Expected O(1), worst case O(n)
     def insert(self, key, value):
         index = self.__find_slot(key)
         if index is None:
-            raise Exception('Fully loaded hash-table')
-        self._map[index] = (key, value)
+            self.resize()
+            self.insert(key, value)
+        else:
+            self._map[index] = (key, value)
 
     # O(1), hi load and really bad clustering -> O(n)
     def contains(self, key):
@@ -33,6 +35,14 @@ class Hashtable:
         for x in self._map:
             if x is not None and x != (0, 0):
                 yield x
+
+    # O(capacity)
+    def resize(self):
+        items = list(self.elements())
+        self._capacity = len(items) * 2
+        self._map = [None] * self._capacity
+        for (k, v) in items:
+            self.insert(k, v)
 
     # O(n), for fully loaded table
     def __find_slot(self, key):
@@ -64,7 +74,7 @@ class Hashtable:
 
 
 if __name__ == '__main__':
-    ht = Hashtable(7)
+    ht = Hashtable()
 
     # populate
     ht.insert('abc', 1)
@@ -92,14 +102,33 @@ if __name__ == '__main__':
     print(ht)
     print('Contains "add":', ht.contains('add'))
     print(list(ht.elements()))
+    print('')
 
-    # generate table full exception
+    # removing items to generate garbage chains
+    ht.remove('abb')
+    ht.remove('adc')
+    ht.remove('zzz')
+    print(ht)
+
+    # this will force clean-up
+    ht.insert('hhq', 8)
+    print(ht)
+
+    # dynamically resize hash table
     print('-- -- --')
-    ht = Hashtable(3)
-    ht.insert('abc', 1)
-    ht.insert('adc', 2)
-    ht.insert('aac', 3)
+    ht = Hashtable()
     try:
-        ht.insert('faf', 4)
+        ht.insert('abc', 1)
+        ht.insert('adc', 2)
+        ht.insert('aac', 3)
+        ht.insert('arc', 4)
+        ht.insert('afc', 5)
+        ht.insert('asc', 6)
+        ht.insert('azc', 7)
+        print(ht)
+
+        ht.insert('akc', 8)
+        ht.insert('apc', 9)
+        print(ht)
     except Exception as ex:
         print('Caught: ', repr(ex))
