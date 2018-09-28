@@ -1,5 +1,7 @@
 '''
-Fixed size hash table that uses open addressing (linear probing) for hash collision resolution.
+Fixed size hash table
+that uses open addressing (linear probing) for hash collision resolution
+and lazy elements deletion.
 '''
 
 class Hashtable:
@@ -18,6 +20,19 @@ class Hashtable:
     def contains(self, key):
         index = self.__find_slot(key)
         return (index is not None) and (self._map[index] is not None) and (self._map[index][0] == key)
+
+    # O(1), hi load -> O(n)
+    def remove(self, key):
+        index = self.__find_slot(key)
+        if (index is not None) and (self._map[index] is not None) and (self._map[index][0] == key):
+            # mark element as deleted, without breaking the chain
+            self._map[index] = (0, 0)
+
+    # O(capacity)
+    def elements(self):
+        for x in self._map:
+            if x is not None and x != (0, 0):
+                yield x
 
     # O(n), for fully loaded table
     def __find_slot(self, key):
@@ -60,8 +75,30 @@ if __name__ == '__main__':
     # contains check
     print('Contains "abc": ', ht.contains('abc'))
     print('Contains "bbb": ', ht.contains('bbb'))
+    print('')
+
+    # populate
+    ht.insert('abb', 4)
+    ht.insert('add', 5)
+    ht.insert('adc', 6)
+    print(ht)
+
+    # same key, different value -> overwrite
+    ht.insert('add', 7)
+    print(ht)
+
+    ht.remove('add')
+    ht.insert('add', 7)
+    print(ht)
+    print('Contains "add":', ht.contains('add'))
+    print(list(ht.elements()))
 
     # generate table full exception
+    print('-- -- --')
+    ht = Hashtable(3)
+    ht.insert('abc', 1)
+    ht.insert('adc', 2)
+    ht.insert('aac', 3)
     try:
         ht.insert('faf', 4)
     except Exception as ex:
