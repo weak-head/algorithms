@@ -21,22 +21,33 @@ class Stack:
 
 def balanced(expression):
     stack = Stack()
-    parens = { ')':'(',']':'[','}':'{'}
+    parens = { ')':'('
+             , ']':'['
+             , '}':'{'
+             }
     open_parens = parens.values()
     close_parens = parens.keys()
     for ix, c in enumerate(expression):
         if c in open_parens:
             stack.push((c, ix))
         elif c in close_parens:
-            (cp, ixo) = stack.pop()
+            (cp, ixo) = (None, 0) if stack.isEmpty() else stack.pop()
             if parens.get(c) != cp:
-                return (False, ix)
+                return (False, ixo, ix)
     if stack.isEmpty():
-        return (True, 0)
+        return (True, 0, 0)
     else:
         (_, ixo) = stack.pop()
-        return (False, ixo)
+        return (False, ixo, len(expression) - 1)
 
 if __name__ == '__main__':
-    print(balanced('(())('))
-    print(balanced('[{}()[]]'))
+    test_cases = [ '(())('
+                 , '[{}()[]]'
+                 , '('
+                 , ')'
+                 , '4 * (7 + 2) ^ 10'
+                 , '4 * ((7 + 2) ^ 10'
+                 , '[19/2] * (45 ^ 22) + {aba_ }'
+                 ]
+    for tc in test_cases:
+        print(tc, ' -> ', balanced(tc))
