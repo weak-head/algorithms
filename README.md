@@ -28,7 +28,7 @@
   - queue
     - [double ended](data-structures/adt/queue/double-ended-queue.py)
     - [linked list](data-structures/adt/queue/queue-linked-list.py)
-  - stack ([alg](data-structures/adt/queue/alg))
+  - stack ([alg](data-structures/adt/stack/alg))
     - [linked list](data-structures/adt/stack/stack-linked-list.py)
   - priority queue
     - [linked list](data-structures/adt/priority-queue/priority-queue-linked-list.hs)
