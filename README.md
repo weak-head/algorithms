@@ -25,19 +25,19 @@
 ## Data structures
 
 - abstract data type
-  - [queue](data-structures/adt/queue)
+  - queue
     - [double ended](data-structures/adt/queue/double-ended-queue.py)
     - [linked list](data-structures/adt/queue/queue-linked-list.py)
-  - [stack](data-structures/adt/stack)
+  - stack ([alg](data-structures/adt/queue/alg))
     - [linked list](data-structures/adt/stack/stack-linked-list.py)
-  - [priority queue](data-structures/adt/priority-queue)
+  - priority queue
     - [linked list](data-structures/adt/priority-queue/priority-queue-linked-list.hs)
     - [sorted dynamic array](data-structures/adt/priority-queue/priority-queue-sorted-array.cpp)
-- array
+- array ([alg](data-structures/array/alg))
   - [dynamic array](data-structures/array/dynamic-array.cpp)
   - [parallel array](data-structures/array/parallel-array.py)
   - [circular buffer](data-structures/array/circular-buffer.cpp)
-- list
+- list ([alg](data-structures/list/alg))
   - [singly linked list](data-structures/list/singly-linked-list.py)
   - [doubly linked list](data-structures/list/doubly-linked-list.py)
   - [self-organizing list](data-structures/list/self-organizing-list.py)
