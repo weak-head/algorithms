@@ -53,4 +53,5 @@
   - [open addressing](data-structures/hash-table/open-addressing-hash-table.py)
 - binary tree
   - [binary tree](data-structures/binary-tree/binary-tree.py)
-  - [[alg] n-th min element](data-structures/binary-tree/alg/nth-min.py)
+  - [[alg] n-th min in BST](data-structures/binary-tree/alg/nth-min.py)
+  - [[alg] merge two BST](data-structures/binary-tree/alg/merge-two-bst.py)
