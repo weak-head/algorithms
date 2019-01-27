@@ -51,7 +51,13 @@
 - hash table
   - [separate chaining](data-structures/hash-table/separate-chaining-hash-table.py)
   - [open addressing](data-structures/hash-table/open-addressing-hash-table.py)
-- binary tree
+- search tree
   - [binary tree](data-structures/binary-tree/binary-tree.py)
+  - todo: b tree
+  - todo: b+ tree
+  - todo: avl tree
+  - todo: red-black tree
+  - todo: 2-3 tree
+  - todo: trie
   - [[alg] n-th min in BST](data-structures/binary-tree/alg/nth-min.py)
   - [[alg] merge two BST](data-structures/binary-tree/alg/merge-two-bst.py)
