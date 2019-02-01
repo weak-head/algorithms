@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 # O(1) successor and predecessor in BST
 
 class Node:
@@ -32,3 +34,21 @@ class BST:
             else:
                 self._insert(parent.left, data)
 
+    def traverse(self, f):
+        def _traverse(node, f):
+            if node is None:
+                return
+            _traverse(node.left, f)
+            f(node.data)
+            _traverse(node.right, f)
+        _traverse(self._head, f)
+
+
+if __name__ == '__main__':
+    bst = BST()
+
+    items = [100, 50, 200, 25, 70, 150, 250, 5, 30, 60, 80, 180, 75, 90]
+    for i in items:
+        bst.insert(i)
+
+    bst.traverse(print)
