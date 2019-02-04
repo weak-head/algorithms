@@ -48,6 +48,7 @@
   - [unrolled linked list](data-structures/list/unrolled-linked-list.py)
   - [difference list](data-structures/list/difference-list.hs)
   - [[alg] reverse linked list](data-structures/list/alg/reverse-linked-list.py)
+  - [[alg] find middle node](data-structures/list/alg/mid-node.py)
 - hash table
   - [separate chaining](data-structures/hash-table/separate-chaining-hash-table.py)
   - [open addressing](data-structures/hash-table/open-addressing-hash-table.py)
