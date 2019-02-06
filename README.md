@@ -63,3 +63,4 @@
   - [[alg] n-th min in BST](data-structures/binary-tree/alg/nth-min.py)
   - [[alg] merge two BST](data-structures/binary-tree/alg/merge-two-bst.py)
   - [[alg] O(1) suc/pred in BST](data-structures/binary-tree/alg/bst-suc-pred.py)
+  - [[alg] compare two BST](data-structures/binary-tree/alg/compare-two-bst.py)
