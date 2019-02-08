@@ -49,6 +49,7 @@
   - [difference list](data-structures/list/difference-list.hs)
   - [[alg] reverse linked list](data-structures/list/alg/reverse-linked-list.py)
   - [[alg] find middle node](data-structures/list/alg/mid-node.py)
+  - [[alg] detect loop](data-structures/list/alg/loop-in-linked-list.py)
 - hash table
   - [separate chaining](data-structures/hash-table/separate-chaining-hash-table.py)
   - [open addressing](data-structures/hash-table/open-addressing-hash-table.py)

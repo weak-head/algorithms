@@ -1,3 +1,8 @@
+"""
+    Detect loop in a linked list,
+    without allocating any additional memory.
+"""
+
 
 class Node:
     def __init__(self, data, next = None):
