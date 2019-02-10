@@ -34,6 +34,7 @@
   - priority queue
     - [linked list](data-structures/adt/priority-queue/priority-queue-linked-list.hs)
     - [sorted dynamic array](data-structures/adt/priority-queue/priority-queue-sorted-array.cpp)
+    - [heap](data-structures/heap/heap.cc)
 - array
   - [dynamic array](data-structures/array/dynamic-array.cpp)
   - [parallel array](data-structures/array/parallel-array.py)

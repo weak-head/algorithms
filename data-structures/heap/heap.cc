@@ -11,6 +11,7 @@ Heap<T>::~Heap() {
 
 }
 
+// O(log n)
 template<typename T>
 void Heap<T>::Insert(T item) {
   if (size_ == vec_.size())
@@ -20,6 +21,7 @@ void Heap<T>::Insert(T item) {
   bubble_up(size_++);
 }
 
+// O(1)
 template<typename T>
 T Heap<T>::Min() {
   if (size_ == 0)
@@ -27,6 +29,7 @@ T Heap<T>::Min() {
   return vec_[0];
 }
 
+// O(log n)
 template<typename T>
 T Heap<T>::ExtractMin() {
   if (size_ == 0)
