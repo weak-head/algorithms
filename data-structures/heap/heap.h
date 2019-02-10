@@ -14,7 +14,7 @@ class Heap {
   T Min();
   T ExtractMin();
 
-  int Size() const { return size_ };
+  int Size() const { return size_; };
 
  private:
   void heapify();
@@ -22,7 +22,7 @@ class Heap {
   int parent(int index);
   int young_child(int index);
 
-  std:vector<T> vec_;
+  std::vector<T> vec_;
   int size_;
 };
 
