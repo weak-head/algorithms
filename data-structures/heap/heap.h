@@ -17,7 +17,7 @@ class Heap {
   int Size() const { return size_; };
 
  private:
-  void heapify();
+  void heapify(int index);
   void bubble_up(int index);
   int parent(int index);
   int young_child(int index);

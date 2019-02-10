@@ -33,8 +33,24 @@ T Heap<T>::ExtractMin() {
 }
 
 template<typename T>
-void Heap<T>::heapify() {
+void Heap<T>::heapify(int index) {
+  if (index >= size_)
+    return;
 
+  T lchild_ix = young_child(index);
+  T rchild_ix = lchild_ix + 1;
+  int min_index = index;
+
+  if (lchild_ix <= size_)
+    min_index = (vec_[lchild_ix] < vec_[min_index]) ? lchild_ix : min_index;
+
+  if (rchild_ix <= size_)
+    min_index = (vec_[rchild_ix] < vec_[min_index]) ? rchild_ix : min_index;
+
+  if (index != min_index) {
+    std::swap(vec_[index], vec_[min_index]);
+    heapify(min_index);
+  }
 }
 
 template<typename T>
