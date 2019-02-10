@@ -29,7 +29,14 @@ T Heap<T>::Min() {
 
 template<typename T>
 T Heap<T>::ExtractMin() {
-  return NULL;
+  if (size_ == 0)
+    return NULL;
+
+  T min   = vec_[0];
+  vec_[0] = vec_[--size_];
+  heapify(0);
+
+  return min;
 }
 
 template<typename T>
@@ -86,4 +93,12 @@ int main() {
 
   heap.Insert(1);
   std::cout << "Min item: " << heap.Min() << std::endl;
+
+  std::cout << std::endl << "The heap: " << std::endl;
+  int min;
+  while (min = heap.ExtractMin()) {
+    std::cout << " -> " << min;
+  }
+
+  std::cout << std::endl;
 }
