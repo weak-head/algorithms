@@ -3,6 +3,8 @@
 
 #include <vector>
 
+namespace heap {
+
 template<typename T>
 class Heap {
  public:
@@ -25,5 +27,7 @@ class Heap {
   std::vector<T> vec_;
   int size_;
 };
+
+}
 
 #endif

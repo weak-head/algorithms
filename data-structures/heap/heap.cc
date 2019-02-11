@@ -1,6 +1,8 @@
 #include "heap.h"
 #include <iostream>
 
+namespace heap {
+
 template<typename T>
 Heap<T>::Heap() : vec_(), size_(0) {
 
@@ -81,27 +83,6 @@ int Heap<T>::young_child(int index) {
   return (index << 1) + 1;
 }
 
-int main() {
-  Heap<int> heap;
-  heap.Insert(10);
-  heap.Insert(17);
-  heap.Insert(13);
-  heap.Insert(8);
-  heap.Insert(19);
-  heap.Insert(7);
-  std::cout << "Min item: " << heap.Min() << std::endl;
+template class Heap<int>;
 
-  heap.Insert(4);
-  std::cout << "Min item: " << heap.Min() << std::endl;
-
-  heap.Insert(1);
-  std::cout << "Min item: " << heap.Min() << std::endl;
-
-  std::cout << std::endl << "The heap: " << std::endl;
-  int min;
-  while (min = heap.ExtractMin()) {
-    std::cout << " -> " << min;
-  }
-
-  std::cout << std::endl;
 }
