@@ -57,6 +57,7 @@
   - [open addressing](data-structures/hash-table/open-addressing-hash-table.py)
 - heap
   - [heap](data-structures/heap/heap.cc)
+  - [[alg] k-th greater than x](data-structures/heap/kth-greater-x-heap.cc)
 - search tree
   - [binary tree](data-structures/binary-tree/binary-tree.py)
   - todo: b tree
