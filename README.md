@@ -55,6 +55,8 @@
 - hash table
   - [separate chaining](data-structures/hash-table/separate-chaining-hash-table.py)
   - [open addressing](data-structures/hash-table/open-addressing-hash-table.py)
+- heap
+  - [heap](data-structures/heap/heap.cc)
 - search tree
   - [binary tree](data-structures/binary-tree/binary-tree.py)
   - todo: b tree
