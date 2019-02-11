@@ -1,46 +1,88 @@
 #include <iostream>
 #include <vector>
+#include <random>
+#include <algorithm>
+#include <iterator>
+#include <functional>
 
 typedef std::vector<int> Array;
+typedef std::vector<int> PriorityQueue;
 
-void Heapify(Array array, int index) {
-  if (index > array.size())
+using namespace std;
+
+// O(log n)
+void Heapify(PriorityQueue& pq, int index) {
+  if (index >= pq.size())
     return;
 
   int lchild_ix = index << 1;
   int rchild_ix = lchild_ix + 1;
   int min_index = index;
 
-  if (lchild_ix <= array.size())
-    min_index = (array[min_index] < array[lchild_ix]) ? min_index : lchild_ix;
+  if (lchild_ix < pq.size())
+    min_index = (pq[min_index] < pq[lchild_ix]) ? min_index : lchild_ix;
 
-  if (rchild_ix <= array.size())
-    min_index = (array[min_index] < array[rchild_ix]) ? min_index : rchild_ix;
+  if (rchild_ix < pq.size())
+    min_index = (pq[min_index] < pq[rchild_ix]) ? min_index : rchild_ix;
 
   if (min_index != index) {
-    std::swap(array[index], array[min_index]);
-    Heapify(array, min_index);
+    std::swap(pq[index], pq[min_index]);
+    Heapify(pq, min_index);
   }
 }
 
-// O (log n)
-Array BuildPriorityQueue(Array array) {
-  Array priorityQueue(array);
+// O(log n)
+PriorityQueue BuildPriorityQueue(const Array& array) {
+  PriorityQueue priorityQueue(array);
 
-  for (int i = (priorityQueue.size() >> 1); i >= 0; i--) {
+  for (int i = (priorityQueue.size() >> 1); i >= 0; i--)
     Heapify(priorityQueue, i);
-  }
 
   return priorityQueue;
 }
 
-// O (n * log n)
-void Heapsort(Array array) {
-  Array priority_queue = BuildPriorityQueue(array);
+// O(log n)
+int ExtractMin(PriorityQueue& pq) {
+  int min = pq[0];
 
+  pq[0]   = pq[pq.size() - 1];
+  pq.pop_back();
 
+  Heapify(pq, 0);
+
+  return min;
+}
+
+// O(n * log n)
+void Heapsort(Array& array) {
+  PriorityQueue priority_queue = BuildPriorityQueue(array);
+
+  for (int i = 0; i < array.size(); i++)
+    array[i] = ExtractMin(priority_queue);
+}
+
+Array GenerateRandomArray() {
+  random_device rnd_device;
+  mt19937 mersenne_engine { rnd_device() };
+  uniform_int_distribution<int> dist {1, 100};
+
+  auto gen =
+    [&dist, &mersenne_engine]() {
+      return dist(mersenne_engine);
+    };
+
+  vector<int> vec(13);
+  generate(begin(vec), end(vec), gen);
+
+  return vec;
 }
 
 int main() {
+  Array array = GenerateRandomArray();
+  Heapsort(array);
 
+  for (auto i : array)
+    cout << i << " ";
+
+  cout << endl;
 }
