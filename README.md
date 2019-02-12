@@ -14,8 +14,10 @@
 
 - sorting
   - [bubble](searching-and-sorting/bubble-sort/bubble-sort.hs)
+  - selection
   - [insertion](searching-and-sorting/insertion-sort/insertion-sort.hs)
   - [heapsort](searching-and-sorting/heap-sort/heapsort.cc)
+  - [mergesort](searching-and-sorting/merge-sort/merge-sort.cc)
 
 ## NP hard
 
