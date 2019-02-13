@@ -18,6 +18,7 @@
   - [insertion](searching-and-sorting/insertion-sort/insertion-sort.hs)
   - [heapsort](searching-and-sorting/heap-sort/heapsort.cc)
   - [mergesort](searching-and-sorting/merge-sort/merge-sort.cc)
+  - [quicksort](searching-and-sorting/quick-sort/quicksort.cc)
 
 ## NP hard
 
