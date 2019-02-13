@@ -14,7 +14,7 @@
 
 - sorting
   - [bubble](searching-and-sorting/bubble-sort/bubble-sort.hs)
-  - selection
+  - [selection](searching-and-sorting/selection-sort/selection.cc)
   - [insertion](searching-and-sorting/insertion-sort/insertion-sort.hs)
   - [heapsort](searching-and-sorting/heap-sort/heapsort.cc)
   - [mergesort](searching-and-sorting/merge-sort/merge-sort.cc)
