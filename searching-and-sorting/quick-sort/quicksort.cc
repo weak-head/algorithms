@@ -1,6 +1,13 @@
 #include <iostream>
 #include <vector>
 
+#include <random>
+#include <algorithm>
+#include <iterator>
+#include <functional>
+
+using namespace std;
+
 typedef std::vector<int> Array;
 
 int partition(Array& a, int l, int r) {
@@ -8,9 +15,9 @@ int partition(Array& a, int l, int r) {
 
   for (int i = l; i < r; i++)
     if (a[i] < a[pivot])
-      std::swap(a[i], a[last_min++]);
+      swap(a[i], a[last_min++]);
 
-  std::swap(a[last_min], a[pivot]);
+  swap(a[last_min], a[pivot]);
 
   return last_min;
 }
@@ -24,20 +31,55 @@ void quicksort(Array& a, int l, int r) {
   quicksort(a, p + 1, r);
 }
 
-/*
+// O(n)
+void fisher_yates_shuffle(Array& a) {
+  random_device rnd_device;
+  mt19937 mersenne_engine(rnd_device());
 
+  for (int i = a.size() - 1; i > 0; i--) {
+    uniform_int_distribution<int> dist(0, i - 1);
+    int j = dist(mersenne_engine);
+
+    swap(a[i], a[j]);
+  }
+}
+
+/*
+  By relying on random shuffle we can avoid
+  the worst case running time O(n^2) with pretty
+  high probability.
+
+  Without the shuffle, previously sorted array
+  will result in the worst case running time.
 */
 void quicksort(Array& a) {
+  fisher_yates_shuffle(a);
   quicksort(a, 0, a.size() - 1);
 }
 
+Array generate_random_array() {
+  random_device rnd_device;
+  mt19937 mersenne_engine { rnd_device() };
+  uniform_int_distribution<int> dist {1, 100};
+
+  auto gen =
+    [&dist, &mersenne_engine]() {
+      return dist(mersenne_engine);
+    };
+
+  vector<int> vec(30);
+  generate(begin(vec), end(vec), gen);
+
+  return vec;
+}
+
 int main() {
-  Array a { 12, 1, 2, 7, 13, 20, 9, 0, 42, 17, 5, 8, 4 };
+  Array a = generate_random_array();
 
   quicksort(a);
 
   for (auto i : a)
-    std::cout << i << " ";
+    cout << i << " ";
 
-  std::cout << std::endl;
+  cout << endl;
 }
