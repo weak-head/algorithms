@@ -7,6 +7,10 @@ def random_array(num_elements = 100000, el_min_value = 0, el_max_value = 2000000
 
 PROFILE_DATA = {}
 def profile(fn):
+    '''
+        Profiles how long it takes to run a function,
+        accumulating global average
+     '''
     @wraps(fn)
     def with_profile(*args, **kwargs):
         start_time = time.time()
@@ -77,6 +81,14 @@ def partition(a, l, r):
 
 
 if __name__ == '__main__':
+    num_elements = 200 * 1000
+
     for i in range(0, 5):
-        arr = random_array()
+        arr = random_array(num_elements = num_elements)
         quick_sort(arr)
+
+    print('-- worst case setup --')
+    num_elements = 700
+    arr = random_array(num_elements = num_elements)
+    quick_sort(arr)
+    quick_sort(arr)
