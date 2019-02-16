@@ -1,9 +1,24 @@
 
 def quick_sort(a):
-    pass
+    '''
+        Quick sort is one of the canonical examples of randomized algorithms.
+        In the worst-case (previously sorted array) will run in O(n^2).
+        The expected running time is O(n * log n).
 
-def quick_sort(a, l, r):
-    pass
+        To avoid worst case scenario, some random shuffle could be applied
+        th the input collection. As one of the examples is Fisher-Yates, that
+        runs in O(n) and dosn't increase the complexity of quick sort, but
+        with pretty high probability eliminates the worst case scenario.
+     '''
+    _quick_sort(a, 0, len(a) - 1)
+
+def _quick_sort(a, l, r):
+    if (l >= r):
+        return
+
+    pivot = partition(a, l, r)
+    _quick_sort(a, l, pivot - 1)
+    _quick_sort(a, pivot + 1, r)
 
 def partition(a, l, r):
     '''
@@ -20,8 +35,6 @@ def partition(a, l, r):
         Returns:
             The new index of the pivot element
      '''
-    if (l >= r):
-        return
 
     last_min, pivot = l, a[r]
     for i in range(l, r):
@@ -35,4 +48,6 @@ def partition(a, l, r):
 
 
 if __name__ == '__main__':
-    print(partition([0, 7, 11, 23, 4, 2, 1, 5, 19, 7], 0, 9))
+    arr = [0, 7, 11, 23, 4, 2, 1, 5, 19, 7]
+    quick_sort(arr)
+    print(arr)
