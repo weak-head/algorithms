@@ -1,3 +1,32 @@
+import random
+import time
+from functools import wraps
+
+def random_array(el_num = 100000, min_val = 0, max_val = 2000000):
+    return random.sample(range(min_val, max_val), el_num)
+
+PROFILE_DATA = {}
+def profile(fn):
+    @wraps(fn)
+    def func_wrap(*args, **kwargs):
+        start_time = time.time()
+        res = fn(*args, **kwargs)
+        elapsed_time = time.time() - start_time
+
+        fn_name = fn.__name__
+        if fn_name not in PROFILE_DATA:
+            PROFILE_DATA[fn_name] = []
+        PROFILE_DATA[fn_name].append(elapsed_time)
+
+        avg = sum(PROFILE_DATA[fn_name]) / len(PROFILE_DATA[fn_name])
+
+        print('{fn_name} has finished in {time:.3f} sec, averaging {avg:.3f} sec'
+            .format( fn_name = fn_name
+                   , time = elapsed_time
+                   , avg = avg))
+
+        return res
+    return func_wrap
 
 def heapify(a, ix):
     '''
@@ -46,6 +75,7 @@ def extract_min(a):
 
     return min
 
+@profile
 def heapsort(a):
     '''
         The heapsort could be seen as greatly improved version
@@ -66,8 +96,7 @@ def heapsort(a):
         a[i] = extract_min(pq)
 
 if __name__ == '__main__':
-    a = [1,37,2,7,2,49,0,5,9,12]
-    heapsort(a)
-    print(a)
-
-
+    el_num = 200 * 1000
+    for i in range(0, 5):
+        a = random_array(el_num)
+        heapsort(a)
