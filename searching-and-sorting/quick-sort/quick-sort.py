@@ -1,4 +1,33 @@
+import random
+import time
+from functools import wraps
 
+def random_array(num_elements = 100000, el_min_value = 0, el_max_value = 2000000):
+    return random.sample(range(el_min_value, el_max_value), num_elements)
+
+PROFILE_DATA = {}
+def profile(fn):
+    @wraps(fn)
+    def with_profile(*args, **kwargs):
+        start_time = time.time()
+        res = fn(*args, **kwargs)
+        elapsed_time = time.time() - start_time
+
+        fn_name = fn.__name__
+        if fn_name not in PROFILE_DATA:
+            PROFILE_DATA[fn_name] = []
+        PROFILE_DATA[fn_name].append(elapsed_time)
+
+        average = sum(PROFILE_DATA[fn_name]) / len(PROFILE_DATA[fn_name])
+
+        print('{fn_name} finished in {time:.3f} sec, averaging {avg:.3f} sec'
+            .format( fn_name = fn_name
+                   , time = elapsed_time
+                   , avg = average))
+        return res
+    return with_profile
+
+@profile
 def quick_sort(a):
     '''
         Quick sort is one of the canonical examples of randomized algorithms.
@@ -48,6 +77,6 @@ def partition(a, l, r):
 
 
 if __name__ == '__main__':
-    arr = [0, 7, 11, 23, 4, 2, 1, 5, 19, 7]
-    quick_sort(arr)
-    print(arr)
+    for i in range(0, 5):
+        arr = random_array()
+        quick_sort(arr)
