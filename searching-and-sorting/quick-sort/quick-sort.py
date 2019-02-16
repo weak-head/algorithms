@@ -10,7 +10,7 @@ def profile(fn):
     '''
         Profiles how long it takes to run a function,
         accumulating global average
-     '''
+    '''
     @wraps(fn)
     def with_profile(*args, **kwargs):
         start_time = time.time()
@@ -42,7 +42,7 @@ def quick_sort(a):
         th the input collection. As one of the examples is Fisher-Yates, that
         runs in O(n) and dosn't increase the complexity of quick sort, but
         with pretty high probability eliminates the worst case scenario.
-     '''
+    '''
     _quick_sort(a, 0, len(a) - 1)
 
 def _quick_sort(a, l, r):
@@ -67,7 +67,7 @@ def partition(a, l, r):
 
         Returns:
             The new index of the pivot element
-     '''
+    '''
 
     last_min, pivot = l, a[r]
     for i in range(l, r):
