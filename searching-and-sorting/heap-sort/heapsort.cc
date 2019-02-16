@@ -53,7 +53,18 @@ int ExtractMin(PriorityQueue& pq) {
   return min;
 }
 
-// O(n * log n)
+/*
+  The heapsort could be seen as greatly improved version
+  of the selection sort that takes adventage of the priority queue.
+
+  It takes O(log n) to build a priority queue and O(log n)
+  to extract a top element from the queue.
+
+  The total running time is O(n * log n).
+
+  One downside of heapsort is that it requires O(n) additional space
+  for the priority queue.
+*/
 void Heapsort(Array& array) {
   PriorityQueue priority_queue = BuildPriorityQueue(array);
 
