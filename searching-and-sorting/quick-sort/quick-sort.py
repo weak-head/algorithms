@@ -22,12 +22,14 @@ def profile(fn):
             PROFILE_DATA[fn_name] = []
         PROFILE_DATA[fn_name].append(elapsed_time)
 
-        average = sum(PROFILE_DATA[fn_name]) / len(PROFILE_DATA[fn_name])
+        total = sum(PROFILE_DATA[fn_name])
+        average = total / len(PROFILE_DATA[fn_name])
 
-        print('{fn_name} finished in {time:.3f} sec, averaging {avg:.3f} sec'
+        print('{fn_name} finished in {time:.3f} sec, averaging {avg:.3f} sec, total time: {total:.3f} sec'
             .format( fn_name = fn_name
                    , time = elapsed_time
-                   , avg = average))
+                   , avg = average
+                   , total = total))
         return res
     return with_profile
 
