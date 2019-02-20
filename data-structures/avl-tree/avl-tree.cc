@@ -26,7 +26,26 @@ Avl<T>::~Avl() {
   delete root_;
 }
 
+template<typename T>
+void Avl<T>::Insert(const T data) {
+  root_ = Insert(root_, data);
+}
+
+template<typename T>
+AvlNode<T>* Avl<T>::Insert(AvlNode<T> *node, const T data) {
+  if (!node)
+    return new AvlNode<T>(data);
+
+  if (node->data() < data)
+    node->set_left(Insert(node->right(), data));
+  else
+    node->set_right(Insert(node->left(), data));
+
+  return node;
+}
+
 // Defined AVL instances
+template class AvlNode<int>;
 template class Avl<int>;
 
 } // namespace avl

@@ -15,14 +15,14 @@ class AvlNode {
     const T data() const { return data_; }
     void set_data(const T data) { data_ =  data; }
 
-    const AvlNode<T> parent() const { return parent_; }
-    void set_parent(const AvlNode<T> *parent) { parent_ = parent; }
+    AvlNode<T> *parent() const { return parent_; }
+    void set_parent(AvlNode<T> *parent) { parent_ = parent; }
 
-    const AvlNode<T> left() const { return left_; }
-    void set_left(const AvlNode<T> *left) { left_ = left; }
+    AvlNode<T> *left() const { return left_; }
+    void set_left(AvlNode<T> *left) { left_ = left; }
 
-    const AvlNode<T> right() const { return right_; }
-    void set_right(const AvlNode<T> *right) { right_ = right; }
+    AvlNode<T> *right() const { return right_; }
+    void set_right(AvlNode<T> *right) { right_ = right; }
 
     const int height() const { return height_; }
     int set_height(const int height) { height_ = height; }
@@ -52,7 +52,11 @@ class Avl {
 
     void Insert(const T item);
     bool Delete(const T item);
-    AvlNode<T> *Find(const T item) const;
+    bool Find(const T item) const;
+
+  protected:
+    // Insert the data into the subtree and return a new subtree root
+    AvlNode<T> *Insert(AvlNode<T> *node, const T data);
 
   private:
     AvlNode<T> *root_;
