@@ -1,10 +1,14 @@
+import random
 
 # the value is used as a hard barrier
 # during the merge of two ordered sets.
 # By pushing this <max_element> to the bottom
 # of stack we can avoid having check for
 # the empty stack edge condition
-MAX_VALUE = 200
+MAX_VALUE = 2000000
+
+def random_array(size = 100000, min_value = 0, max_value = MAX_VALUE - 1):
+    return random.sample(range(min_value, max_value), size)
 
 def merge(a, l, m , r):
     '''
@@ -32,10 +36,17 @@ def _mergesort(a, l, r):
     merge(a, l, pivot + 1, r)
 
 def mergesort(a):
+    '''
+    Idea:
+        Recursively divide the collection to simplest case that is already sorted (single element).
+        Recursively merge ordered sub-arrays into the final ordered array.
+
+    Complexity:
+        O(n * log n)
+    '''
     _mergesort(a, 0, len(a) - 1)
 
 if __name__ == '__main__':
-    a = [0, 2, 4, 6, 8, 1, 3, 5, 7]
+    a = random_array()
     mergesort(a)
-    print(a)
-
+    print('done')
