@@ -52,16 +52,58 @@ AvlNode<T>* Avl<T>::Rebalance(AvlNode<T> *node) const {
   int l_height = node->left()  ? node->left()->height()  : 0;
   int r_height = node->right() ? node->right()->height() : 0;
 
-  int node_height = std::max(l_height, r_height) + 1;
   //       balance < -1 -> Left subtree is higher
   // -1 <= balance <= 1 -> balanced
   //       balance >  1 -> right subree is higher
   int balance = r_height - l_height;
 
-  //node->set_height(node_height);
+  // left subtree is higher (LL or LR rotation is required)
+  if (balance < -1) {
+    int ll_height = node->left()->left() ?
+                    node->left()->left()->height() : 0;
+    int lr_height = node->left()->right() ?
+                    node->left()->right()->height() : 0;
+    // LL case
+    if (ll_height > lr_height)
+      return RotateRight(node);
+    // LR case
+    else {
+      node->set_left(RotateLeft(node->left()));
+      return RotateRight(node);
+    }
+  }
+  // right subtree is higher (RR or RL rotation is required)
+  else if (balance > 1) {
+    int rr_height = node->right()->right() ?
+                    node->right()->right()->height() : 0;
+    int rl_height = node->right()->left() ?
+                    node->right()->left()->height() : 0;
+    // RR case
+    if (rr_height > rl_height)
+      return RotateLeft(node);
+    // RL case
+    else {
+      node->set_right(RotateRight(node->right()));
+      return RotateLeft(node);
+    }
+  }
+  // the node is in balance
+  else {
+    int node_height = std::max(l_height, r_height) + 1;
+    node->set_height(node_height);
+    return node;
+  }
+}
+
+template<typename T>
+AvlNode<T> *Avl<T>::RotateLeft(AvlNode<T> *node) const {
   return node;
 }
 
+template<typename T>
+AvlNode<T> *Avl<T>::RotateRight(AvlNode<T> *node) const {
+  return node;
+}
 
 // Defined AVL instances
 template class AvlNode<int>;

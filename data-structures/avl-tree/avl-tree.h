@@ -62,6 +62,9 @@ class Avl {
     // left and right siblings. New root of the subtree is returned.
     AvlNode<T> *Rebalance(AvlNode<T> *node) const;
 
+    AvlNode<T> *RotateLeft(AvlNode<T> *node) const;
+    AvlNode<T> *RotateRight(AvlNode<T> *node) const;
+
   private:
     AvlNode<T> *root_;
 };
