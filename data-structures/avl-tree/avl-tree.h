@@ -55,8 +55,12 @@ class Avl {
     bool Find(const T item) const;
 
   protected:
-    // Insert the data into the subtree and return a new subtree root
+    // Insert the data into the subtree and return a new subtree root.
     AvlNode<T> *Insert(AvlNode<T> *node, const T data);
+
+    // Re-balance the sub-tree considering the height of it's
+    // left and right siblings. New root of the subtree is returned.
+    AvlNode<T> *Rebalance(AvlNode<T> *node) const;
 
   private:
     AvlNode<T> *root_;

@@ -1,4 +1,5 @@
 #include "avl-tree.h"
+#include <algorithm>
 
 namespace avl {
 
@@ -36,13 +37,31 @@ AvlNode<T>* Avl<T>::Insert(AvlNode<T> *node, const T data) {
   if (!node)
     return new AvlNode<T>(data);
 
+  // recursively insert the data
+  // into the correct subtree
   if (node->data() < data)
     node->set_left(Insert(node->right(), data));
   else
     node->set_right(Insert(node->left(), data));
 
+  return Rebalance(node);
+}
+
+template<typename T>
+AvlNode<T>* Avl<T>::Rebalance(AvlNode<T> *node) const {
+  int l_height = node->left()  ? node->left()->height()  : 0;
+  int r_height = node->right() ? node->right()->height() : 0;
+
+  int node_height = std::max(l_height, r_height) + 1;
+  //       balance < -1 -> Left subtree is higher
+  // -1 <= balance <= 1 -> balanced
+  //       balance >  1 -> right subree is higher
+  int balance = r_height - l_height;
+
+  //node->set_height(node_height);
   return node;
 }
+
 
 // Defined AVL instances
 template class AvlNode<int>;
