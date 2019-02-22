@@ -94,7 +94,18 @@ AvlNode<T>* Avl<T>::Rebalance(AvlNode<T> *node) const {
 
 template<typename T>
 AvlNode<T> *Avl<T>::RotateLeft(AvlNode<T> *node) const {
-  return node;
+  AvlNode<T> *x  = node->right();
+  AvlNode<T> *c3 = x->left();
+
+  // rotate the subtree
+  node->set_right(c3);
+  x->set_left(node);
+
+  // adjust the height of the nodes
+  node->set_height(NodeHeight(node));
+  x->set_height(NodeHeight(x));
+
+  return x;
 }
 
 template<typename T>
@@ -103,10 +114,10 @@ AvlNode<T> *Avl<T>::RotateRight(AvlNode<T> *node) const {
   AvlNode<T> *c3 = x->right();
 
   // rotate the subtree
-  x->set_right(node);
   node->set_left(c3);
+  x->set_right(node);
 
-  // adjust height of the nodes
+  // adjust the height of the nodes
   node->set_height(NodeHeight(node));
   x->set_height(NodeHeight(x));
 
