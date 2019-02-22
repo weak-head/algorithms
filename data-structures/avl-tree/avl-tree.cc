@@ -1,5 +1,6 @@
 #include "avl-tree.h"
 #include <algorithm>
+#include <functional>
 
 namespace avl {
 
@@ -30,6 +31,12 @@ Avl<T>::~Avl() {
 template<typename T>
 void Avl<T>::Insert(const T data) {
   root_ = Insert(root_, data);
+}
+
+template<typename T>
+void Avl<T>::Traverse(std::function<void(T)> callback,
+                      const Traversal traversal) const {
+
 }
 
 template<typename T>

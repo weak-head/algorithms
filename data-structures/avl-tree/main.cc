@@ -28,6 +28,8 @@ int main(int argc, char **argv) {
   for (auto i : a)
     avl.Insert(i);
 
+  avl.Traverse([](int item) { cout << item << ", "; });
+
   cout << "done" << endl;
   return 0;
 }

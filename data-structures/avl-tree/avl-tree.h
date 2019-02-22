@@ -1,6 +1,8 @@
 #ifndef AVL_TREE_H_
 #define AVL_TREE_H_
 
+#include <functional>
+
 namespace avl {
 
 /*
@@ -36,6 +38,23 @@ class AvlNode {
 };
 
 /*
+  Possible AVL tree traversals:
+    Depth First:
+      - Inorder (Left, Root, Right)
+      - Preorder (Root, Left, Right)
+      - Postorder (Left, Right, Root)
+
+    Breadth First:
+      - Levelorder
+*/
+enum class Traversal {
+  Inorder,
+  Preorder,
+  Postorder,
+  Levelorder
+};
+
+/*
     Balanced binary tree in which
     the difference between height
     of right and left sub-trees is
@@ -53,6 +72,8 @@ class Avl {
     void Insert(const T item);
     bool Delete(const T item);
     bool Find(const T item) const;
+    void Traverse(std::function<void(T)> callback,
+                  const Traversal traversal = Traversal::Inorder) const;
 
   protected:
     // Insert the data into the subtree and return a new subtree root.
