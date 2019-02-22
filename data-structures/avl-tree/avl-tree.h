@@ -65,6 +65,7 @@ class Avl {
     AvlNode<T> *RotateLeft(AvlNode<T> *node) const;
     AvlNode<T> *RotateRight(AvlNode<T> *node) const;
 
+    const int NodeHeight(const AvlNode<T> *node) const;
     const int LeftHeight(const AvlNode<T> *node) const;
     const int RightHeight(const AvlNode<T> *node) const;
 

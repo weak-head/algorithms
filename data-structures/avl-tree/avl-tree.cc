@@ -38,7 +38,7 @@ AvlNode<T>* Avl<T>::Insert(AvlNode<T> *node, const T data) {
     return new AvlNode<T>(data);
 
   // recursively insert the data
-  // into the correct subtree
+  // into the appropriate subtree
   if (node->data() < data)
     node->set_left(Insert(node->right(), data));
   else
@@ -49,8 +49,8 @@ AvlNode<T>* Avl<T>::Insert(AvlNode<T> *node, const T data) {
 
 template<typename T>
 AvlNode<T>* Avl<T>::Rebalance(AvlNode<T> *node) const {
-  int l_height = node->left()  ? node->left()->height()  : 0;
-  int r_height = node->right() ? node->right()->height() : 0;
+  int l_height = LeftHeight(node);
+  int r_height = RightHeight(node);
 
   //       balance < -1 -> Left subtree is higher
   // -1 <= balance <= 1 -> balanced
@@ -59,10 +59,9 @@ AvlNode<T>* Avl<T>::Rebalance(AvlNode<T> *node) const {
 
   // left subtree is higher (LL or LR rotation is required)
   if (balance < -1) {
-    int ll_height = node->left()->left() ?
-                    node->left()->left()->height() : 0;
-    int lr_height = node->left()->right() ?
-                    node->left()->right()->height() : 0;
+    int ll_height = LeftHeight(node->left());
+    int lr_height = RightHeight(node->left());
+
     // LL case
     if (ll_height > lr_height)
       return RotateRight(node);
@@ -74,10 +73,9 @@ AvlNode<T>* Avl<T>::Rebalance(AvlNode<T> *node) const {
   }
   // right subtree is higher (RR or RL rotation is required)
   else if (balance > 1) {
-    int rr_height = node->right()->right() ?
-                    node->right()->right()->height() : 0;
-    int rl_height = node->right()->left() ?
-                    node->right()->left()->height() : 0;
+    int rr_height = RightHeight(node->right());
+    int rl_height = LeftHeight(node->right());
+
     // RR case
     if (rr_height > rl_height)
       return RotateLeft(node);
@@ -89,8 +87,7 @@ AvlNode<T>* Avl<T>::Rebalance(AvlNode<T> *node) const {
   }
   // the node is in balance
   else {
-    int node_height = std::max(l_height, r_height) + 1;
-    node->set_height(node_height);
+    node->set_height(NodeHeight(node));
     return node;
   }
 }
@@ -109,15 +106,16 @@ AvlNode<T> *Avl<T>::RotateRight(AvlNode<T> *node) const {
   x->set_right(node);
   node->set_left(c3);
 
-  // adjust node height
-  int node_height = std::max(LeftHeight(node), RightHeight(node)) + 1;
-  node->set_height(node_height);
-
-  // adjust x height
-  int x_height = std::max(LeftHeight(x), RightHeight(x)) + 1;
-  x->set_height(x_height);
+  // adjust height of the nodes
+  node->set_height(NodeHeight(node));
+  x->set_height(NodeHeight(x));
 
   return x;
+}
+
+template<typename T>
+inline const int Avl<T>::NodeHeight(const AvlNode<T> *node) const {
+  return std::max(LeftHeight(node), RightHeight(node)) + 1;
 }
 
 template<typename T>
