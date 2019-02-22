@@ -102,7 +102,32 @@ AvlNode<T> *Avl<T>::RotateLeft(AvlNode<T> *node) const {
 
 template<typename T>
 AvlNode<T> *Avl<T>::RotateRight(AvlNode<T> *node) const {
-  return node;
+  AvlNode<T> *x  = node->left();
+  AvlNode<T> *c3 = x->right();
+
+  // rotate the subtree
+  x->set_right(node);
+  node->set_left(c3);
+
+  // adjust node height
+  int node_height = std::max(LeftHeight(node), RightHeight(node)) + 1;
+  node->set_height(node_height);
+
+  // adjust x height
+  int x_height = std::max(LeftHeight(x), RightHeight(x)) + 1;
+  x->set_height(x_height);
+
+  return x;
+}
+
+template<typename T>
+inline const int Avl<T>::LeftHeight(const AvlNode<T> *node) const {
+  return node->left() ? node->left()->height() : 0;
+}
+
+template<typename T>
+inline const int Avl<T>::RightHeight(const AvlNode<T> *node) const {
+  return node->right() ? node->right()->height() : 0;
 }
 
 // Defined AVL instances
