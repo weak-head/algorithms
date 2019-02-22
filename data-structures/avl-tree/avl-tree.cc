@@ -50,9 +50,9 @@ AvlNode<T>* Avl<T>::Insert(AvlNode<T> *node, const T data) {
   // recursively insert the data
   // into the appropriate subtree
   if (node->data() < data)
-    node->set_left(Insert(node->right(), data));
+    node->set_right(Insert(node->right(), data));
   else
-    node->set_right(Insert(node->left(), data));
+    node->set_left(Insert(node->left(), data));
 
   return Rebalance(node);
 }
