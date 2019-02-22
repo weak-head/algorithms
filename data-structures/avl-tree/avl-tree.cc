@@ -36,7 +36,10 @@ void Avl<T>::Insert(const T data) {
 template<typename T>
 void Avl<T>::Traverse(std::function<void(T)> callback,
                       const Traversal traversal) const {
-
+  if (traversal == Traversal::Levelorder)
+    return;
+  else
+    DepthFirstTraverse(root_, callback, traversal);
 }
 
 template<typename T>
@@ -144,6 +147,27 @@ inline const int Avl<T>::LeftHeight(const AvlNode<T> *node) const {
 template<typename T>
 inline const int Avl<T>::RightHeight(const AvlNode<T> *node) const {
   return node->right() ? node->right()->height() : 0;
+}
+
+template<typename T>
+void Avl<T>::DepthFirstTraverse(const AvlNode<T> *node,
+                                std::function<void(T)> callback,
+                                const Traversal traversal) const {
+  if (!node)
+    return;
+
+  if (traversal == Traversal::Preorder)
+    callback(node->data());
+
+  DepthFirstTraverse(node->left(), callback, traversal);
+
+  if (traversal == Traversal::Inorder)
+    callback(node->data());
+
+  DepthFirstTraverse(node->right(), callback, traversal);
+
+  if (traversal == Traversal::Postorder)
+    callback(node->data());
 }
 
 // Defined AVL instances

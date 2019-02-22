@@ -90,6 +90,10 @@ class Avl {
     const int LeftHeight(const AvlNode<T> *node) const;
     const int RightHeight(const AvlNode<T> *node) const;
 
+    void DepthFirstTraverse(const AvlNode<T> *node,
+                            std::function<void(T)> callback,
+                            const Traversal traversal) const;
+
   private:
     AvlNode<T> *root_;
 };
