@@ -62,7 +62,7 @@
   - [heap](data-structures/heap/heap.cc)
   - [[alg] k-th greater than x](data-structures/heap/kth-greater-x-heap.cc)
 - search tree
-  - [binary tree](data-structures/binary-tree/binary-tree.py)
+  - [unbalanced binary tree](data-structures/binary-tree/binary-tree.py)
   - [avl tree](data-structures/avl-tree/avl-tree.cc)
   - todo: b tree
   - todo: b+ tree
