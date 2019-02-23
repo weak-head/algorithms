@@ -1,6 +1,7 @@
 #include "avl-tree.h"
 #include <algorithm>
 #include <functional>
+#include <queue>
 
 namespace avl {
 
@@ -37,7 +38,7 @@ template<typename T>
 void Avl<T>::Traverse(std::function<void(T)> callback,
                       const Traversal traversal) const {
   if (traversal == Traversal::Levelorder)
-    return;
+    BreadthFirstTraverse(root_, callback);
   else
     DepthFirstTraverse(root_, callback, traversal);
 }
@@ -168,6 +169,25 @@ void Avl<T>::DepthFirstTraverse(const AvlNode<T> *node,
 
   if (traversal == Traversal::Postorder)
     callback(node->data());
+}
+
+template<typename T>
+void Avl<T>::BreadthFirstTraverse(const AvlNode<T> *node,
+                                  std::function<void(T)> callback) const {
+  std::queue<const AvlNode<T>*> order;
+  order.push(node);
+
+  const AvlNode<T> *next;
+  while (next = order.front()) {
+    callback(next->data());
+    order.pop();
+
+    if (next->left())
+      order.push(next->left());
+
+    if (next->right())
+      order.push(next->right());
+  }
 }
 
 // Defined AVL instances

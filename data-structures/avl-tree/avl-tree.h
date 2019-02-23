@@ -93,6 +93,8 @@ class Avl {
     void DepthFirstTraverse(const AvlNode<T> *node,
                             std::function<void(T)> callback,
                             const Traversal traversal) const;
+    void BreadthFirstTraverse(const AvlNode<T> *node,
+                              std::function<void(T)> callback) const;
 
   private:
     AvlNode<T> *root_;
