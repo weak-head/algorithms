@@ -174,17 +174,17 @@ inline const int Avl<T>::RightHeight(const AvlNode<T> *node) const {
 }
 
 template<typename T>
-bool Avl<T>::Find(const AvlNode<T> *node, T item) const {
+const AvlNode<T> *Avl<T>::Find(const AvlNode<T> *node, T item) const {
   if (!node)
-    return false;
+    return 0;
 
   if (node->data() == item)
-    return true;
+    return node;
 
   if (node->data() < item)
-    Find(node->right(), item);
+    return Find(node->right(), item);
   else
-    Find(node->left(), item);
+    return Find(node->left(), item);
 }
 
 template<typename T>

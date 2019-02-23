@@ -79,7 +79,7 @@ class Avl {
     // Insert the data into the subtree and return a new subtree root.
     AvlNode<T> *Insert(AvlNode<T> *node, const T data);
 
-    bool Find(const AvlNode<T> *node, const T data) const;
+    const AvlNode<T> *Find(const AvlNode<T> *node, const T data) const;
 
     // Re-balance the sub-tree considering the height of it's
     // left and right siblings. New root of the subtree is returned.
