@@ -35,6 +35,11 @@ void Avl<T>::Insert(const T data) {
 }
 
 template<typename T>
+bool Avl<T>::Find(const T item) const {
+  return Find(root_, item);
+}
+
+template<typename T>
 void Avl<T>::Traverse(std::function<void(T)> callback,
                       const Traversal traversal) const {
   if (traversal == Traversal::Levelorder)
@@ -148,6 +153,20 @@ inline const int Avl<T>::LeftHeight(const AvlNode<T> *node) const {
 template<typename T>
 inline const int Avl<T>::RightHeight(const AvlNode<T> *node) const {
   return node->right() ? node->right()->height() : 0;
+}
+
+template<typename T>
+bool Avl<T>::Find(const AvlNode<T> *node, T item) const {
+  if (!node)
+    return false;
+
+  if (node->data() == item)
+    return true;
+
+  if (node->data() < item)
+    Find(node->right(), item);
+  else
+    Find(node->left(), item);
 }
 
 template<typename T>
