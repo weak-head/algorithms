@@ -55,10 +55,16 @@ AvlNode<T>* Avl<T>::Insert(AvlNode<T> *node, const T data) {
 
   // recursively insert the data
   // into the appropriate subtree
-  if (node->data() < data)
-    node->set_right(Insert(node->right(), data));
-  else
-    node->set_left(Insert(node->left(), data));
+  if (node->data() < data) {
+    AvlNode<T> *r_node = Insert(node->right(), data);
+    node->set_right(r_node);
+    r_node->set_parent(node);
+  }
+  else {
+    AvlNode<T> *l_node = Insert(node->left(), data);
+    node->set_left(l_node);
+    l_node->set_parent(node);
+  }
 
   return Rebalance(node);
 }
@@ -117,6 +123,12 @@ AvlNode<T> *Avl<T>::RotateLeft(AvlNode<T> *node) const {
   node->set_right(c3);
   x->set_left(node);
 
+  // adjust parent-child relations
+  x->set_parent(node->parent());
+  node->set_parent(x);
+  if (c3)
+    c3->set_parent(node);
+
   // adjust the height of the nodes
   node->set_height(NodeHeight(node));
   x->set_height(NodeHeight(x));
@@ -132,6 +144,12 @@ AvlNode<T> *Avl<T>::RotateRight(AvlNode<T> *node) const {
   // rotate the subtree
   node->set_left(c3);
   x->set_right(node);
+
+  // adjust parent-child relations
+  x->set_parent(node->parent());
+  node->set_parent(x);
+  if (c3)
+    c3->set_parent(node);
 
   // adjust the height of the nodes
   node->set_height(NodeHeight(node));
