@@ -1,5 +1,6 @@
 #include "avl-tree.h"
 #include <iostream>
+#include <iomanip>
 #include <vector>
 #include <random>
 #include <algorithm>
@@ -21,15 +22,45 @@ vector<int> generate_random_array(int num = 1000, int min = 1, int max = 1000) {
   return vec;
 }
 
+void print_avl(avl::Avl<int> *tree) {
+  cout << "Inorder: [";
+  tree->Traverse([](int item) {
+        cout << setfill('0') << setw(3) << item;
+        cout << ", ";
+      });
+  cout << "]";
+  cout << endl;
+
+  cout << "Level:   [";
+  tree->Traverse([](int item) {
+        cout << setfill('0') << setw(3) << item;
+        cout << ", ";
+      }, avl::Traversal::Levelorder);
+  cout << "]";
+}
+
 int main(int argc, char **argv) {
-  vector<int> a = generate_random_array(100);
+  vector<int> a = generate_random_array(20);
   avl::Avl<int> avl;
 
-  for (auto i : a)
+  for (auto i : a) {
+    cout << "ins: " << i << endl;
+
     avl.Insert(i);
+    print_avl(&avl);
 
-  avl.Traverse([](int item) { cout << item << ", "; });
+    cout << endl << endl;
+  }
 
-  cout << "done" << endl;
+  for (auto i : a) {
+    cout << "del: " << i << endl;
+
+    avl.Delete(i);
+    print_avl(&avl);
+
+    cout << endl << endl;
+  }
+
+  cout << "<done>" << endl;
   return 0;
 }
