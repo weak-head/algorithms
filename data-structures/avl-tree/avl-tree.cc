@@ -101,15 +101,21 @@ AvlNode<T> *Avl<T>::Delete(AvlNode<T> *node, const T data) {
     if (!node->left() || !node->right()) {
       AvlNode<T> *child = node->left() ? node->left() : node->right();
 
+      // No child
       if (!child)
       {
         delete node;
         return NULL;
       }
 
-      auto tmp = node;
+      AvlNode<T> *node_to_delete = node;
       node = child;
-      delete tmp;
+
+      // Delete the node without it's children
+      node_to_delete->set_left(NULL);
+      node_to_delete->set_right(NULL);
+      node_to_delete->set_parent(NULL);
+      delete node_to_delete;
     }
     // Two children
     else {
