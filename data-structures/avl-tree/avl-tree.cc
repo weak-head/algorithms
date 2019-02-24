@@ -2,6 +2,9 @@
 #include <algorithm>
 #include <functional>
 #include <queue>
+#include <iostream>
+
+using namespace std;
 
 namespace avl {
 
@@ -287,11 +290,15 @@ void Avl<T>::DepthFirstTraverse(const AvlNode<T> *node,
 template<typename T>
 void Avl<T>::BreadthFirstTraverse(const AvlNode<T> *node,
                                   std::function<void(T)> callback) const {
+  if (!node)
+    return;
+
   std::queue<const AvlNode<T>*> order;
   order.push(node);
 
-  const AvlNode<T> *next;
-  while (next = order.front()) {
+  while (!order.empty()) {
+    auto next = order.front();
+
     callback(next->data());
     order.pop();
 
