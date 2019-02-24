@@ -40,6 +40,11 @@ bool Avl<T>::Find(const T item) const {
 }
 
 template<typename T>
+void Avl<T>::Delete(const T data) {
+  root_ = Delete(root_, data);
+}
+
+template<typename T>
 void Avl<T>::Traverse(std::function<void(T)> callback,
                       const Traversal traversal) const {
   if (traversal == Traversal::Levelorder)
@@ -64,6 +69,61 @@ AvlNode<T>* Avl<T>::Insert(AvlNode<T> *node, const T data) {
     AvlNode<T> *l_node = Insert(node->left(), data);
     node->set_left(l_node);
     l_node->set_parent(node);
+  }
+
+  return Rebalance(node);
+}
+
+template<typename T>
+AvlNode<T> *Avl<T>::Delete(AvlNode<T> *node, const T data) {
+  if (!node)
+    return NULL;
+
+  // recursively delete node from the
+  // appropriate subtree.
+  // Search for the node in the right subtree
+  if (node->data() < data) {
+    AvlNode<T> *r_node = Delete(node->right(), data);
+    node->set_right(r_node);
+    if (r_node)
+      r_node->set_parent(node);
+  }
+  // Search for the node in the left subtree
+  else if (node->data() > data) {
+    AvlNode<T> *l_node = Delete(node->left(), data);
+    node->set_left(l_node);
+    if (l_node)
+      l_node->set_parent(node);
+  }
+  // The node that we want to delete
+  else {
+    // Single child or no children at all
+    if (!node->left() || !node->right()) {
+      AvlNode<T> *child = node->left() ? node->left() : node->right();
+
+      if (!child)
+      {
+        delete node;
+        return NULL;
+      }
+
+      auto tmp = node;
+      node = child;
+      delete tmp;
+    }
+    // Two children
+    else {
+      AvlNode<T> *left_most = MaxNode(node->left());
+
+      // Replace the data
+      node->set_data(left_most->data());
+
+      // Delete the left most
+      AvlNode<T> *l_node = Delete(node->left(), node->data());
+      node->set_left(l_node);
+      if (l_node)
+        l_node->set_parent(node);
+    }
   }
 
   return Rebalance(node);
@@ -185,6 +245,16 @@ const AvlNode<T> *Avl<T>::Find(const AvlNode<T> *node, T item) const {
     return Find(node->right(), item);
   else
     return Find(node->left(), item);
+}
+
+template<typename T>
+AvlNode<T> *Avl<T>::MaxNode(AvlNode<T> *node) const {
+  AvlNode<T> *max_node = node;
+
+  while(max_node->right())
+    max_node = max_node->right();
+
+  return max_node;
 }
 
 template<typename T>

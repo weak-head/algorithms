@@ -70,7 +70,7 @@ class Avl {
     ~Avl();
 
     void Insert(const T item);
-    bool Delete(const T item);
+    void Delete(const T item);
     bool Find(const T item) const;
     void Traverse(std::function<void(T)> callback,
                   const Traversal traversal = Traversal::Inorder) const;
@@ -78,7 +78,9 @@ class Avl {
   protected:
     // Insert the data into the subtree and return a new subtree root.
     AvlNode<T> *Insert(AvlNode<T> *node, const T data);
-
+    // Delete the node with the data from the subtree and return a new subtree root.
+    AvlNode<T> *Delete(AvlNode<T> *node, const T data);
+    // Find the node with the data in the subtree and return a pointer to the node.
     const AvlNode<T> *Find(const AvlNode<T> *node, const T data) const;
 
     // Re-balance the sub-tree considering the height of it's
@@ -91,6 +93,8 @@ class Avl {
     const int NodeHeight(const AvlNode<T> *node) const;
     const int LeftHeight(const AvlNode<T> *node) const;
     const int RightHeight(const AvlNode<T> *node) const;
+
+    AvlNode<T> *MaxNode(AvlNode<T> *node) const;
 
     void DepthFirstTraverse(const AvlNode<T> *node,
                             std::function<void(T)> callback,
