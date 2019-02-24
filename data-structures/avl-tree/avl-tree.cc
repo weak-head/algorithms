@@ -114,7 +114,6 @@ AvlNode<T> *Avl<T>::Delete(AvlNode<T> *node, const T data) {
       // Delete the node without it's children
       node_to_delete->set_left(NULL);
       node_to_delete->set_right(NULL);
-      node_to_delete->set_parent(NULL);
       delete node_to_delete;
     }
     // Two children
