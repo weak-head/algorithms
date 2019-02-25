@@ -35,6 +35,7 @@
   - stack
     - [linked list](data-structures/adt/stack/stack-linked-list.py)
     - [[alg] balanced parentheses](data-structures/adt/stack/alg/parentheses-match.py)
+    - [[alg] max elem in O(1)](data-structures/adt/stack/alg/const_time_max_in_stack.cc)
   - priority queue
     - [linked list](data-structures/adt/priority-queue/priority-queue-linked-list.hs)
     - [sorted dynamic array](data-structures/adt/priority-queue/priority-queue-sorted-array.cpp)
