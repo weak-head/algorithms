@@ -1,5 +1,7 @@
 #include <iostream>
 #include <stack>
+#include <array>
+
 using namespace std;
 
 /*
@@ -43,7 +45,7 @@ class MaxStack {
       stack_.pop();
       if (value > max_) {
         int old_max = max_;
-        max_ = (value << 1) - old_max;
+        max_ = (max_ << 1) - value;
         return old_max;
       }
       else
@@ -64,5 +66,39 @@ class MaxStack {
 
 
 int main() {
+  array<int, 9> a {1, 3, 2, 0, 5, 4, 7, 9, 8};
+  MaxStack ms;
 
+  // Output the elements to be inserted into stack
+  cout << "=> [";
+  for (int i = 0; i < a.size(); i++) {
+    cout << a[i];
+
+    if (i != a.size() - 1)
+      cout << ", ";
+  }
+  cout << "]" << endl << endl;
+
+  // Push all elements to stack
+  for (int i : a) {
+    ms.push(i);
+    cout << "push: " << i << "; max: " << ms.max() << endl;
+  }
+  cout << endl;
+
+  // Pop and output all elements from the stack
+  while (!ms.empty()) {
+    int max = ms.max();
+    int value = ms.pop();
+
+    cout << "pop: " << value << "; max: " << max;
+
+    if (!ms.empty())
+      cout << "; new max: " << ms.max() << endl;
+    else
+      cout << endl;
+  }
+
+  cout << endl;
+  return 0;
 }
