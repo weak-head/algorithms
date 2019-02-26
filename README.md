@@ -75,4 +75,4 @@
   - [[alg] O(1) suc/pred in BST](data-structures/binary-tree/alg/bst-suc-pred.py)
   - [[alg] compare two BST](data-structures/binary-tree/alg/compare-two-bst.py)
 - other
-  - [lru cache](data-structres/other/lru-cache/lru-cache.py)
+  - [lru cache](data-structures/other/lru-cache/lru-cache.py)
