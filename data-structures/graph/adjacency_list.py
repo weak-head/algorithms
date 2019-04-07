@@ -75,3 +75,31 @@ class Graph:
             # process the 'current' vertice after edge
             if process_vertex_late is not None:
                 process_vertex_late(current)
+
+    def two_color(self):
+        '''Assigns Black or White label to each vertice of the graph'''
+
+        colors = {v: 'uncolored' for v in self.edges.keys()}
+        bipartite = True
+
+        def complement(color):
+            if color == 'uncolored':
+                return 'uncolored'
+
+            return 'black' if color == 'white' else 'white'
+
+        def process_edge(from_vertice, to_vertice):
+            if colors[from_vertice] == colors[to_vertice]:
+                nonlocal bipartite
+                bipartite = False
+
+            colors[to_vertice] = complement(colors[from_vertice])
+
+        for vertice in self.edges.keys():
+            if colors[vertice] == 'uncolored':
+                colors[vertice] = 'white'
+                self.bfs(vertice, process_edge=process_edge)
+
+        return bipartite, colors
+
+
