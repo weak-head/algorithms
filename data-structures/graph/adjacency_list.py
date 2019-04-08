@@ -39,7 +39,7 @@ class Graph:
         '''Breadth-First Search'''
 
         if start not in self.edges:
-            raise Exception("The edge doesn't exist")
+            raise Exception("The vertice doesn't exist")
 
         que = Queue()
         que.put(start)
@@ -76,6 +76,56 @@ class Graph:
             if process_vertex_late is not None:
                 process_vertex_late(current)
 
+    def dfs(self, start,
+            process_vertex_early=None,
+            process_vertex_late=None,
+            process_edge=None):
+        '''Depth-First Search'''
+
+        if start not in self.edges:
+            raise Exception("The vertice doesn't exist")
+
+        time = 0
+        state = {}
+        for v in self.edges.keys():
+            state[v] = SimpleNamespace()
+            state[v].discovered = False
+            state[v].processed = False
+            state[v].parent = None
+            state[v].entry_time = 0
+            state[v].exit_time = 0
+
+        def do_dfs(vertice):
+            nonlocal time, state
+            time = time + 1
+
+            state[vertice].discovered = True
+            state[vertice].entry_time = time
+
+            if process_vertex_early is not None:
+                process_vertex_early(vertice)
+
+            for children in self.edges[vertice]:
+                if not state[children].discovered:
+                    state[children].parent = vertice
+
+                    if process_edge is not None:
+                        process_edge(vertice, children)
+
+                    do_dfs(children)
+                elif (not state[children].processed and state[children].parent != vertice) or self.directed:
+                    process_edge(vertice, children)
+
+            if process_vertex_late is not None:
+                process_vertex_late(vertice)
+
+            time = time + 1
+            state[vertice].processed = True
+            state[vertice].exit_time = time
+
+        do_dfs(start)
+        return state
+
     def two_color(self):
         '''Assigns Black or White label to each vertice of the graph'''
 
@@ -86,7 +136,7 @@ class Graph:
             if color == 'uncolored':
                 return 'uncolored'
 
-            return 'black' if color == 'white' else 'white'
+            # return 'black' if color == 'white' else 'white'
 
         def process_edge(from_vertice, to_vertice):
             if colors[from_vertice] == colors[to_vertice]:
