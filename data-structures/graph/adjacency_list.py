@@ -85,6 +85,7 @@ class Graph:
         if start not in self.edges:
             raise Exception("The vertice doesn't exist")
 
+        continue_dfs = True
         time = 0
         state = {}
         for v in self.edges.keys():
@@ -96,28 +97,37 @@ class Graph:
             state[v].exit_time = 0
 
         def do_dfs(vertice):
-            nonlocal time, state
+            nonlocal time, state, continue_dfs
             time = time + 1
+
+            if not continue_dfs:
+                return
 
             state[vertice].discovered = True
             state[vertice].entry_time = time
 
             if process_vertex_early is not None:
-                process_vertex_early(vertice)
+                continue_dfs = process_vertex_early(state, vertice)
+
+            if not continue_dfs:
+                return
 
             for children in self.edges[vertice]:
                 if not state[children].discovered:
                     state[children].parent = vertice
 
                     if process_edge is not None:
-                        process_edge(vertice, children)
+                        continue_dfs = process_edge(state, vertice, children)
 
                     do_dfs(children)
                 elif (not state[children].processed and state[children].parent != vertice) or self.directed:
-                    process_edge(vertice, children)
+                    continue_dfs = process_edge(state, vertice, children)
+
+                if not continue_dfs:
+                    return
 
             if process_vertex_late is not None:
-                process_vertex_late(vertice)
+                continue_dfs = process_vertex_late(state, vertice)
 
             time = time + 1
             state[vertice].processed = True
@@ -152,4 +162,20 @@ class Graph:
 
         return bipartite, colors
 
+    def has_cycle(self):
+        '''Returns True if the graph has cycle'''
 
+        has_cycle = False
+        head = next(enumerate(self.edges.keys()))
+
+        def process_edge(state, x, y):
+            # back edge
+            if (state[y].discovered and state[x].parent != y):
+                nonlocal has_cycle
+                has_cycle = True
+                return False
+            return True
+
+        self.dfs(head, process_edge=process_edge)
+
+        return has_cycle
