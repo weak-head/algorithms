@@ -4,6 +4,8 @@
 # - bottom up that builds internal chains
 # - bottom up in O(n * log n)
 
+from bisect import bisect_left
+
 def brute_force_lmis(a):
     """
     Brute force solution.
@@ -15,7 +17,7 @@ def brute_force_lmis(a):
         max_chain = ""
 
         for j in range(aix, len(a)):
-            if p is None or a[j] >= p:
+            if p is None or a[j] > p:
                 chain = a[j] + _bf_lmis(a, a[j], j+1)
                 if len(chain) > len(max_chain):
                     max_chain = chain
@@ -56,7 +58,11 @@ def bottom_up_lcs_lmis(a):
 
     for j in range(1, len(a) + 1):
         for i in range(1, len(a) + 1):
-            if a[i-1] == b[j-1]:
+            # current characters in both strings are equal 
+            # and the current character in any of these strings
+            # doesn't equal to previous character in the other string
+            # (avoid repeating characters)
+            if a[i-1] == b[j-1] and a[i-1] != b[j-2] and a[i-2] != b[j-1]:
                 ln[j][i] = ln[j-1][i-1] + 1
                 ix[j][i] = "diagonal"
             elif ln[j-1][i] >= ln[j][i-1]:
@@ -82,7 +88,7 @@ def bottom_up_lmis(a):
     # build internal chains
     for j in range(len(a)):
         for pix in range(j):
-            if a[pix] <= a[j]:
+            if a[pix] < a[j]:
                 if ln[pix] + 1 > ln[j]:
                     ln[j] = ln[pix] + 1
                     ix[j] = pix
@@ -103,13 +109,69 @@ def bottom_up_lmis(a):
     return chain
 
 
+def quick_lmis_len(a):
+    """
+    Get the length of the longest increasing sequence
+    in O(n * log n).
+    Additional references: 
+        https://en.wikipedia.org/wiki/Patience_sorting
+        https://en.wikipedia.org/wiki/Longest_increasing_subsequence
+    """
+    tails = []
+    for c in a:
+        i = bisect_left(tails, c)
+        if i == len(tails):
+            tails.append(c)
+        tails[i] = c
+    return len(tails) 
 
+
+def quick_lmis(a):
+    """
+    Get the longest increasing sequence using
+    variant of Patience sorting.
+    Time: O(n * log n)
+    Space: O(n)
+    Additional references: 
+        https://en.wikipedia.org/wiki/Patience_sorting
+        https://en.wikipedia.org/wiki/Longest_increasing_subsequence
+    """
+
+    class Node:
+        def __init__(self, v, next=None):
+            self.v = v
+            self.next = next
+        def __lt__(self, other):
+            if type(other) is str:
+                return self.v < other
+            return self.v < other.v
+        
+    def deep_copy(node):
+        if node is None:
+            return None
+        return Node(node.v, deep_copy(node.next))
+
+    def assemble(node):
+        if node is None:
+            return ""
+        return assemble(node.next) + node.v 
+
+    tails = []
+    for c in a:
+        i = bisect_left(tails, c)
+        if i == len(tails):
+            last = deep_copy(tails[-1]) if tails != [] else None
+            tails.append(Node(c, last))
+        tails[i].v = c
+
+    return assemble(tails[-1]) 
 
 
 sequences = [
     "2849713580",
     "1043276980",
     "192834756",
+    "0a1b2z3r4k5v6a7b8a9",
     "dynamicprogramming",
     "longestincreasingsequence",
     "mathematicaloptimizationmethod",
@@ -117,12 +179,16 @@ sequences = [
 
 for seq in sequences:
 
+    ln1 = quick_lmis_len(seq)
     bf1 = brute_force_lmis(seq)
     bu1 = bottom_up_lmis(seq)
     bu2 = bottom_up_lcs_lmis(seq)
+    qk1 = quick_lmis(seq)
 
     print("{0}:".format(seq)) 
+    print("     len: {0}".format(ln1))
     print("      bf: {0}".format(bf1))
     print("      bu: {0}".format(bu1))
     print("  bu_lcs: {0}".format(bu2))
+    print("   quick: {0}".format(qk1))
     print("")
