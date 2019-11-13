@@ -8,6 +8,21 @@ from collections import defaultdict
 class Graph:
 
     class V:
+        """ Vertex in the graph. """
+        def __init__(self, v):
+            self.vertex = v
+
+        def __eq__(self, other):
+            return hasattr(other, "vertex") and other.vertex == self.vertex
+
+        def __hash__(self):
+            return hash(self.vertex)
+
+        def __repr__(self):
+            return "{0}".format(self.vertex)
+
+    class E:
+        """ Edge between vertices. """
         def __init__(self, v, w=1):
             self.vertex = v
             self.weight = w
@@ -19,14 +34,10 @@ class Graph:
             return hash(self.vertex)
 
         def __repr__(self):
-            if self.weight is None:
-                return "{0}".format(self.vertex)
-            else:
-                return "{0}[{1}]".format(self.vertex, self.weight)
-
+            return "{0}<{1}>".format(self.vertex, self.weight)
 
     def __init__(self, edges=None, directed=False):
-        self._graph = defaultdict(set)
+        self._graph = defaultdict(defaultdict)
         self._directed = directed
         self.add_edges(edges)
 
@@ -42,43 +53,37 @@ class Graph:
                 self.add_edge(f, t)
 
     def add_edge(self, f, t, w=1):
-        self._graph[Graph.V(f, None)].add(Graph.V(t, w))
+        self._graph[Graph.V(f)][Graph.V(t)] = Graph.E(t, w)
         if not self._directed:
-            self._graph[Graph.V(t, None)].add(Graph.V(f, w))
+            self._graph[Graph.V(t)][Graph.V(f)] = Graph.E(f, w)
         else:
-            self._graph[Graph.V(t, None)]
+            self._graph[Graph.V(t)]
 
     def remove_edge(self, f, t):
         if Graph.V(f) in self._graph:
             if Graph.V(t) in self._graph[Graph.V(f)]:
-                self._graph[Graph.V(f)].remove(Graph.V(t))
-                # if len(self._graph[Graph.V(f)]) == 0:
-                    # del self._graph[Graph.V(f)]
+                del self._graph[Graph.V(f)][Graph.V(t)]
                 if not self._directed:
                     self.remove_edge(t, f)
-        pass
 
     def remove_vertex(self, v):
         for _, edges in self._graph.items():
             if Graph.V(v) in edges:
-                edges.remove(Graph.V(v))
+                del edges[Graph.V(v)]
         
         if Graph.V(v) in self._graph:
             del self._graph[Graph.V(v)]
 
     def edge(self, f, t):
         if Graph.V(f) in self._graph:
-            # if Graph.V(t) in self._graph[Graph.V(f)]:
-                # return self._graph[Graph.V(f)][Graph.V(t)])
-            for edge in self._graph[Graph.V(f)]:
-                if edge == Graph.V(t):
-                    return edge
+            if Graph.V(t) in self._graph[Graph.V(f)]:
+                return self._graph[Graph.V(f)][Graph.V(t)]
         return None
 
     def __repr__(self):
         s = ""
         for vertex, edges in self._graph.items():
-            s += "{0} -> {1}\n".format(str(vertex), str(edges))
+            s += "{0} -> {1}\n".format(str(vertex), str([edge for _, edge in edges.items()]))
         return s
 
 
@@ -123,7 +128,7 @@ def test_cases():
     print(wg)
 
     wg.add_edge("A", "D", 17)
-    print("add edge A -> B")
+    print("add edge A -> D")
     print(wg)
 
     wg.add_edge("F", "D", 2)
