@@ -9,8 +9,9 @@ class Graph:
 
     class V:
         """ Vertex in the graph. """
-        def __init__(self, v):
+        def __init__(self, v=None, edges=None):
             self.vertex = v
+            self.edges = {} if edges is None else edges
 
         def __eq__(self, other):
             return hasattr(other, "vertex") and other.vertex == self.vertex
@@ -19,25 +20,26 @@ class Graph:
             return hash(self.vertex)
 
         def __repr__(self):
-            return "{0}".format(self.vertex)
+            return "{0} -> {1}".format(str(self.vertex), str([edge for _, edge in self.edges.items()]))
 
     class E:
         """ Edge between vertices. """
-        def __init__(self, v, w=1):
-            self.vertex = v
+        def __init__(self, f, t, w=1):
+            self.from_vertex = f
+            self.to_vertex = t
             self.weight = w
 
         def __eq__(self, other):
-            return hasattr(other, "vertex") and other.vertex == self.vertex
+            return hasattr(other, "to_vertex") and other.to_vertex == self.to_vertex
 
         def __hash__(self):
-            return hash(self.vertex)
+            return hash(self.to_vertex)
 
         def __repr__(self):
-            return "{0}<{1}>".format(self.vertex, self.weight)
+            return "{0}<{1}>".format(self.to_vertex, self.weight)
 
     def __init__(self, edges=None, directed=False):
-        self._graph = defaultdict(defaultdict)
+        self._graph = defaultdict(Graph.V)
         self._directed = directed
         self.add_edges(edges)
 
@@ -53,37 +55,45 @@ class Graph:
                 self.add_edge(f, t)
 
     def add_edge(self, f, t, w=1):
-        self._graph[Graph.V(f)][Graph.V(t)] = Graph.E(t, w)
+        self._graph[f].vertex = f
+        self._graph[f].edges[t] = Graph.E(f, t, w)
+
         if not self._directed:
-            self._graph[Graph.V(t)][Graph.V(f)] = Graph.E(f, w)
+            self._graph[t].vertex = t
+            self._graph[t].edges[f] = Graph.E(t, f, w)
         else:
-            self._graph[Graph.V(t)]
+            self._graph[t].vertex = t
 
     def remove_edge(self, f, t):
-        if Graph.V(f) in self._graph:
-            if Graph.V(t) in self._graph[Graph.V(f)]:
-                del self._graph[Graph.V(f)][Graph.V(t)]
+        if f in self._graph:
+            if t in self._graph[f].edges:
+                del self._graph[f].edges[t]
                 if not self._directed:
                     self.remove_edge(t, f)
 
     def remove_vertex(self, v):
-        for _, edges in self._graph.items():
-            if Graph.V(v) in edges:
-                del edges[Graph.V(v)]
+        for _, vertex in self._graph.items():
+            if v in vertex.edges:
+                del vertex.edges[v]
         
-        if Graph.V(v) in self._graph:
-            del self._graph[Graph.V(v)]
+        if v in self._graph:
+            del self._graph[v]
 
     def edge(self, f, t):
-        if Graph.V(f) in self._graph:
-            if Graph.V(t) in self._graph[Graph.V(f)]:
-                return self._graph[Graph.V(f)][Graph.V(t)]
+        if f in self._graph:
+            if t in self._graph[f].edges:
+                return self._graph[f].edges[t]
+        return None
+
+    def vertex(self, v):
+        if v in self._graph:
+            return self._graph[v]
         return None
 
     def __repr__(self):
         s = ""
-        for vertex, edges in self._graph.items():
-            s += "{0} -> {1}\n".format(str(vertex), str([edge for _, edge in edges.items()]))
+        for _, vertex in self._graph.items():
+            s += "{0}\n".format(vertex)
         return s
 
 
@@ -136,6 +146,7 @@ def test_cases():
     print(wg)
 
     print("edge F -> C, weight: {0}\n".format(wg.edge("F", "C").weight))
+    print("vertex F:  {0}\n".format(wg.vertex("F")))
 
 if __name__ == "__main__":
     test_cases()
