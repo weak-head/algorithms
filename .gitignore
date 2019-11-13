@@ -1,5 +1,7 @@
 CMakeFiles/
 
+*.pyc
+
 settings.json
 CMakeCache.txt
 cmake_install.cmake

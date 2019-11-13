@@ -90,6 +90,9 @@ class Graph:
             return self._graph[v]
         return None
 
+    def vertices(self):
+        return [vertex for _, vertex in self._graph.items()]
+
     def __repr__(self):
         s = ""
         for _, vertex in self._graph.items():
