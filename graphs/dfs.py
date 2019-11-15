@@ -4,7 +4,7 @@ from graph import Graph
 
 class DFS(Graph):
 
-    def dfs(self, f):
+    def dfs(self, on_discovered=None, on_finished=None):
         """
         Depth-first search for both directed and undirected graphs,
         that classifies edges and assigns the discovered and finished time
@@ -26,18 +26,20 @@ class DFS(Graph):
         t = 1
         for vertex in self.vertices():
             if vertex.color == "white":
-                t = self._dfs(vertex, t, f)
+                t = self._dfs(vertex, t, on_discovered, on_finished)
 
-    def _dfs(self, vertex, t, f):
+    def _dfs(self, vertex, t, on_discovered, on_finished):
         vertex.discovered = t
         vertex.color = "grey"
+        if on_discovered is not None:
+            on_discovered(vertex)
         t = t + 1
 
         for _, edge in vertex.edges.items():
             v = self.vertex(edge.to_vertex)
             if v.color == "white":
                 edge.type = "tree"
-                t = self._dfs(v, t, f)
+                t = self._dfs(v, t, on_discovered, on_finished)
             elif v.color == "grey":
                 # facing a "grey" edge in undirected graph
                 # could mean that we are looking
@@ -64,7 +66,8 @@ class DFS(Graph):
 
         vertex.finished = t
         vertex.color = "black"
-        f(vertex)
+        if on_finished is not None:
+            on_finished(vertex)
         return t + 1
 
 
@@ -97,7 +100,7 @@ if __name__ == "__main__":
 
     print(" -- DFS -- \n")
     print("vertex ( discovered | finished )")
-    g.dfs(vprint)
+    g.dfs(on_finished=vprint)
 
     print("\nedges:")
     for e in g.edges(): 
@@ -111,7 +114,7 @@ if __name__ == "__main__":
 
     print(" -- DFS -- \n")
     print("vertex ( discovered | finished )")
-    ug.dfs(vprint)
+    ug.dfs(on_finished=vprint)
 
     print("\nedges:")
     for e in ug.edges(): 

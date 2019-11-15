@@ -64,6 +64,15 @@ class Graph:
         else:
             self._graph[t].vertex = t
 
+    def add_vertices(self, vertices):
+        if not vertices:
+            return
+        for v in vertices:
+            self.add_vertex(v)
+
+    def add_vertex(self, v):
+        self._graph[v].vertex = v
+
     def remove_edge(self, f, t):
         if f in self._graph:
             if t in self._graph[f].edges:
