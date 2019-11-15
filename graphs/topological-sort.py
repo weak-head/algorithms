@@ -7,12 +7,8 @@ class TopologicalSort(DFS):
 
     def topological_sort(self, f):
         sorted_vertices = deque()
-        def addv(v):
-            sorted_vertices.appendleft(v)
-
-        self.dfs(on_finished=addv)
-        for v in sorted_vertices:
-            f(v)
+        self.dfs(on_finished=lambda v: sorted_vertices.appendleft(v))
+        map(f, sorted_vertices)
 
 if __name__ == "__main__":
 
@@ -78,4 +74,3 @@ if __name__ == "__main__":
 
     print(" - Topological sort: ")
     g.topological_sort(showv)
-
