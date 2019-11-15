@@ -93,6 +93,9 @@ class Graph:
     def vertices(self):
         return [vertex for _, vertex in self._graph.items()]
 
+    def edges(self):
+        return [edge for vertex in self.vertices() for _, edge in vertex.edges.items()]
+
     def __repr__(self):
         s = ""
         for _, vertex in self._graph.items():
