@@ -105,6 +105,22 @@ class Graph:
     def edges(self):
         return [edge for vertex in self.vertices() for _, edge in vertex.edges.items()]
 
+    @classmethod
+    def transpose(cls, graph):
+        """Returns a transpose of the graph. The original graph is not modified."""
+        gt = cls(None, directed=graph._directed)
+        for edge in graph.edges():
+            gt.add_edge(edge.to_vertex, edge.from_vertex, edge.weight)
+        return gt
+
+    @classmethod
+    def copy(cls, graph):
+        """Returns a copy of the graph without any metadata attached."""
+        g = cls(None, directed=graph._directed)
+        for edge in graph.edges():
+            g.add_edge(edge.from_vertex, edge.to_vertex, edge.weight)
+        return g
+
     def __repr__(self):
         s = ""
         for _, vertex in self._graph.items():
