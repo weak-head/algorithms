@@ -13,13 +13,14 @@
 ## Searching and sorting
 
 - sorting
-  - [bubble](searching-and-sorting/bubble-sort/bubble-sort.hs)
-  - [selection](searching-and-sorting/selection-sort/selection.cc)
-  - [insertion](searching-and-sorting/insertion-sort/insertion-sort.hs)
-  - [heapsort](searching-and-sorting/heap-sort/heapsort.cc)
-  - [mergesort](searching-and-sorting/merge-sort/merge-sort.cc)
-  - [quicksort](searching-and-sorting/quick-sort/quicksort.cc)
-  - [shellsort](searching-and-sorting/shell-sort/shell-sort.py)
+  - [bubble](sorting/bubble-sort/bubble-sort.hs)
+  - [selection](sorting/selection-sort/selection.cc)
+  - [insertion](sorting/insertion-sort/insertion-sort.hs)
+  - [heap sort](sorting/heap-sort/heapsort.cc)
+  - [merge sort](sorting/merge-sort/merge-sort.cc)
+  - [quick sort](sorting/quick-sort/quicksort.cc)
+  - [shell sort](sorting/shell-sort/shell-sort.py)
+  - [counting sort](sorting/counting-sort/counting.py)
   - todo: bucket sort
 
 ## NP hard
